@@ -1,0 +1,130 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>LCOV - Coverage.combined.cleaned.mocrm - /vagrant/tokenize.cpp</title>
+  <link rel="stylesheet" type="text/css" href="../gcov.css">
+</head>
+
+<body>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="title">LCOV - code coverage report</td></tr>
+    <tr><td class="ruler"><img src="../glass.png" width=3 height=3 alt=""></td></tr>
+
+    <tr>
+      <td width="100%">
+        <table cellpadding=1 border=0 width="100%">
+          <tr>
+            <td width="10%" class="headerItem">Current view:</td>
+            <td width="35%" class="headerValue"><a href="../index.html">top level</a> - <a href="index.html">vagrant</a> - tokenize.cpp<span style="font-size: 80%;"> (source / <a href="tokenize.cpp.func-sort-c.html">functions</a>)</span></td>
+            <td width="5%"></td>
+            <td width="15%"></td>
+            <td width="10%" class="headerCovTableHead">Hit</td>
+            <td width="10%" class="headerCovTableHead">Total</td>
+            <td width="15%" class="headerCovTableHead">Coverage</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Test:</td>
+            <td class="headerValue">Coverage.combined.cleaned.mocrm</td>
+            <td></td>
+            <td class="headerItem">Lines:</td>
+            <td class="headerCovTableEntry">25</td>
+            <td class="headerCovTableEntry">25</td>
+            <td class="headerCovTableEntryHi">100.0 %</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Date:</td>
+            <td class="headerValue">2022-04-19 06:25:44</td>
+            <td></td>
+            <td class="headerItem">Functions:</td>
+            <td class="headerCovTableEntry">4</td>
+            <td class="headerCovTableEntry">4</td>
+            <td class="headerCovTableEntryHi">100.0 %</td>
+          </tr>
+          <tr><td><img src="../glass.png" width=3 height=3 alt=""></td></tr>
+        </table>
+      </td>
+    </tr>
+
+    <tr><td class="ruler"><img src="../glass.png" width=3 height=3 alt=""></td></tr>
+  </table>
+
+  <table cellpadding=0 cellspacing=0 border=0>
+    <tr>
+      <td><br></td>
+    </tr>
+    <tr>
+      <td>
+<pre class="sourceHeading">          Line data    Source code</pre>
+<pre class="source">
+<a name="1"><span class="lineNum">       1 </span>            : #include &quot;tokenize.hpp&quot;</a>
+<span class="lineNum">       2 </span>            : #include &lt;cctype&gt;
+<span class="lineNum">       3 </span>            : 
+<span class="lineNum">       4 </span>            : #include &lt;iostream&gt;
+<span class="lineNum">       5 </span>            : #include &lt;fstream&gt;
+<span class="lineNum">       6 </span>            : #include&lt;string&gt;
+<a name="7"><span class="lineNum">       7 </span>            : using namespace std;</a>
+<span class="lineNum">       8 </span>            : 
+<span class="lineNum">       9 </span><span class="lineCov">       2954 : TokenSequenceType tokenize(std::istream &amp; seq){</span>
+<span class="lineNum">      10 </span><span class="lineCov">       2954 :   TokenSequenceType tokens;</span>
+<span class="lineNum">      11 </span>            :   // TODO: implement your code here
+<span class="lineNum">      12 </span><span class="lineCov">       5908 :         string a;</span>
+<span class="lineNum">      13 </span><span class="lineCov">      12342 :         while (getline(seq,a)) {</span>
+<span class="lineNum">      14 </span><span class="lineCov">       4694 :                 if (a[0]!='\r') {</span>
+<span class="lineNum">      15 </span><span class="lineCov">      34697 :                         for (unsigned int i = 0; i &lt; a.length(); i++) {</span>
+<span class="lineNum">      16 </span><span class="lineCov">      31143 :                                 if (a[i] == '(') {</span>
+<span class="lineNum">      17 </span><span class="lineCov">       4802 :                                         tokens.push_back(&quot;(&quot;);</span>
+<span class="lineNum">      18 </span>            :                                 }
+<span class="lineNum">      19 </span><span class="lineCov">      26341 :                                 else if (a[i] == ')') {</span>
+<span class="lineNum">      20 </span><span class="lineCov">       4701 :                                         tokens.push_back(&quot;)&quot;);</span>
+<span class="lineNum">      21 </span>            :                                 }
+<span class="lineNum">      22 </span><span class="lineCov">      21640 :                                 else if (a[i] == ' ') {</span>
+<span class="lineNum">      23 </span>            :                                         
+<span class="lineNum">      24 </span>            :                                 }
+<span class="lineNum">      25 </span><span class="lineCov">      13220 :                                 else if (a[i] == '\n') {</span>
+<span class="lineNum">      26 </span>            : 
+<span class="lineNum">      27 </span>            :                                 }
+<span class="lineNum">      28 </span><span class="lineCov">      13220 :                                 else if (a[i] == '\r') {</span>
+<span class="lineNum">      29 </span>            : 
+<span class="lineNum">      30 </span>            :                                 }
+<span class="lineNum">      31 </span><span class="lineCov">      12380 :                                 else if (a[i] == ';') {</span>
+<span class="lineNum">      32 </span><span class="lineCov">        900 :                                         break;</span>
+<span class="lineNum">      33 </span>            :                                 }
+<span class="lineNum">      34 </span>            :                                 else {
+<span class="lineNum">      35 </span><span class="lineCov">      22960 :                                         std::string word;</span>
+<span class="lineNum">      36 </span><span class="lineCov">      38109 :                                         for (unsigned int j = i; j &lt; a.length(); j++) {</span>
+<span class="lineNum">      37 </span><span class="lineCov">      37934 :                                                 if (a[j] == ' ' || a[j] == ')'||a[j]=='\r') {</span>
+<span class="lineNum">      38 </span>            :                                                         //i = j-1;
+<span class="lineNum">      39 </span><span class="lineCov">      11305 :                                                         break;</span>
+<span class="lineNum">      40 </span>            :                                                 }
+<span class="lineNum">      41 </span>            : 
+<span class="lineNum">      42 </span><span class="lineCov">      26629 :                                                 word += a[j];</span>
+<span class="lineNum">      43 </span>            :                                         }
+<span class="lineNum">      44 </span><span class="lineCov">      11480 :                                         i = i + word.length() - 1;</span>
+<span class="lineNum">      45 </span><span class="lineCov">      11480 :                                         if (!word.empty()) {</span>
+<span class="lineNum">      46 </span><span class="lineCov">      11480 :                                                 tokens.push_back(word);</span>
+<span class="lineNum">      47 </span>            :                                         }
+<span class="lineNum">      48 </span>            : 
+<span class="lineNum">      49 </span>            :                                 }
+<span class="lineNum">      50 </span>            :                         }
+<span class="lineNum">      51 </span>            :                 }
+<a name="52"><span class="lineNum">      52 </span>            :         }</a>
+<span class="lineNum">      53 </span><span class="lineCov">       5908 :   return tokens;</span>
+<span class="lineNum">      54 </span><span class="lineCov">         93 : }</span>
+</pre>
+      </td>
+    </tr>
+  </table>
+  <br>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="ruler"><img src="../glass.png" width=3 height=3 alt=""></td></tr>
+    <tr><td class="versionInfo">Generated by: <a href="http://ltp.sourceforge.net/coverage/lcov.php" target="_parent">LCOV version 1.13</a></td></tr>
+  </table>
+  <br>
+
+</body>
+</html>

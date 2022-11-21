@@ -1,0 +1,301 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>LCOV - Coverage.combined.cleaned.mocrm - /vagrant/expression.cpp</title>
+  <link rel="stylesheet" type="text/css" href="../gcov.css">
+</head>
+
+<body>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="title">LCOV - code coverage report</td></tr>
+    <tr><td class="ruler"><img src="../glass.png" width=3 height=3 alt=""></td></tr>
+
+    <tr>
+      <td width="100%">
+        <table cellpadding=1 border=0 width="100%">
+          <tr>
+            <td width="10%" class="headerItem">Current view:</td>
+            <td width="35%" class="headerValue"><a href="../index.html">top level</a> - <a href="index.html">vagrant</a> - expression.cpp<span style="font-size: 80%;"> (source / <a href="expression.cpp.func-sort-c.html">functions</a>)</span></td>
+            <td width="5%"></td>
+            <td width="15%"></td>
+            <td width="10%" class="headerCovTableHead">Hit</td>
+            <td width="10%" class="headerCovTableHead">Total</td>
+            <td width="15%" class="headerCovTableHead">Coverage</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Test:</td>
+            <td class="headerValue">Coverage.combined.cleaned.mocrm</td>
+            <td></td>
+            <td class="headerItem">Lines:</td>
+            <td class="headerCovTableEntry">131</td>
+            <td class="headerCovTableEntry">146</td>
+            <td class="headerCovTableEntryMed">89.7 %</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Date:</td>
+            <td class="headerValue">2022-04-19 06:25:44</td>
+            <td></td>
+            <td class="headerItem">Functions:</td>
+            <td class="headerCovTableEntry">11</td>
+            <td class="headerCovTableEntry">11</td>
+            <td class="headerCovTableEntryHi">100.0 %</td>
+          </tr>
+          <tr><td><img src="../glass.png" width=3 height=3 alt=""></td></tr>
+        </table>
+      </td>
+    </tr>
+
+    <tr><td class="ruler"><img src="../glass.png" width=3 height=3 alt=""></td></tr>
+  </table>
+
+  <table cellpadding=0 cellspacing=0 border=0>
+    <tr>
+      <td><br></td>
+    </tr>
+    <tr>
+      <td>
+<pre class="sourceHeading">          Line data    Source code</pre>
+<pre class="source">
+<a name="1"><span class="lineNum">       1 </span>            : #include &quot;expression.hpp&quot;</a>
+<span class="lineNum">       2 </span>            : 
+<span class="lineNum">       3 </span>            : #include &lt;cmath&gt;
+<span class="lineNum">       4 </span>            : #include &lt;limits&gt;
+<span class="lineNum">       5 </span>            : #include &lt;cctype&gt;
+<span class="lineNum">       6 </span>            : #include &lt;ctype.h&gt;
+<span class="lineNum">       7 </span>            : #include &lt;string&gt;
+<span class="lineNum">       8 </span>            : // system includes
+<a name="9"><span class="lineNum">       9 </span>            : #include &lt;sstream&gt;</a>
+<span class="lineNum">      10 </span>            : using namespace std;
+<span class="lineNum">      11 </span><span class="lineCov">        990 : Expression::Expression(bool tf){</span>
+<span class="lineNum">      12 </span>            :   // TODO: implement this function
+<span class="lineNum">      13 </span><span class="lineCov">        990 :         head.type = BooleanType;</span>
+<a name="14"><span class="lineNum">      14 </span><span class="lineCov">        990 :         head.value.bool_value = tf;</span></a>
+<span class="lineNum">      15 </span><span class="lineCov">        990 : }</span>
+<span class="lineNum">      16 </span><span class="lineCov">        849 : Expression::Expression(double num){</span>
+<span class="lineNum">      17 </span>            :   // TODO: implement this function
+<span class="lineNum">      18 </span><span class="lineCov">        849 :         head.type = NumberType;</span>
+<a name="19"><span class="lineNum">      19 </span><span class="lineCov">        849 :         head.value.num_value = num;</span></a>
+<span class="lineNum">      20 </span><span class="lineCov">        849 : }</span>
+<span class="lineNum">      21 </span><span class="lineCov">         18 : Expression::Expression(const std::string &amp; sym){</span>
+<span class="lineNum">      22 </span>            :   // TODO: implement this function
+<span class="lineNum">      23 </span><span class="lineCov">         18 :         head.type = SymbolType;</span>
+<a name="24"><span class="lineNum">      24 </span><span class="lineCov">         18 :         head.value.sym_value = sym;</span></a>
+<span class="lineNum">      25 </span><span class="lineCov">         18 : }</span>
+<span class="lineNum">      26 </span><span class="lineCov">         21 : Expression::Expression(std::tuple&lt;double, double&gt; value) {</span>
+<span class="lineNum">      27 </span><span class="lineCov">         21 :         head.type = PointType;</span>
+<span class="lineNum">      28 </span><span class="lineCov">         21 :         head.value.point_value.x = get&lt;0&gt;(value);</span>
+<a name="29"><span class="lineNum">      29 </span><span class="lineCov">         21 :         head.value.point_value.y = get&lt;1&gt;(value);</span></a>
+<span class="lineNum">      30 </span><span class="lineCov">         21 : }</span>
+<span class="lineNum">      31 </span><span class="lineCov">         20 : Expression::Expression(std::tuple&lt;double, double&gt; start, std::tuple&lt;double, double&gt; end) {</span>
+<span class="lineNum">      32 </span><span class="lineCov">         20 :         head.type = LineType;</span>
+<span class="lineNum">      33 </span><span class="lineCov">         20 :         head.value.line_value.first.x = get&lt;0&gt;(start);</span>
+<span class="lineNum">      34 </span><span class="lineCov">         20 :         head.value.line_value.first.y= get&lt;1&gt;(start);</span>
+<span class="lineNum">      35 </span><span class="lineCov">         20 :         head.value.line_value.second.x = get&lt;0&gt;(end);</span>
+<a name="36"><span class="lineNum">      36 </span><span class="lineCov">         20 :         head.value.line_value.second.y = get&lt;1&gt;(end);</span></a>
+<span class="lineNum">      37 </span><span class="lineCov">         20 : }</span>
+<span class="lineNum">      38 </span><span class="lineCov">         20 : Expression::Expression(std::tuple&lt;double, double&gt; center, std::tuple&lt;double, double&gt; start, double angle) {</span>
+<span class="lineNum">      39 </span><span class="lineCov">         20 :         head.type = ArcType;</span>
+<span class="lineNum">      40 </span><span class="lineCov">         20 :         head.value.arc_value.center.x = get&lt;0&gt;(center);</span>
+<span class="lineNum">      41 </span><span class="lineCov">         20 :         head.value.arc_value.center.y = get&lt;1&gt;(center);</span>
+<span class="lineNum">      42 </span><span class="lineCov">         20 :         head.value.arc_value.start.x = get&lt;0&gt;(start);</span>
+<span class="lineNum">      43 </span><span class="lineCov">         20 :         head.value.arc_value.start.y = get&lt;1&gt;(start);</span>
+<a name="44"><span class="lineNum">      44 </span><span class="lineCov">         20 :         head.value.arc_value.span = angle;</span></a>
+<span class="lineNum">      45 </span><span class="lineCov">         20 : }</span>
+<span class="lineNum">      46 </span><span class="lineCov">       2038 : bool Expression::operator==(const Expression &amp; exp) const noexcept{//  2</span>
+<span class="lineNum">      47 </span><span class="lineCov">       2038 :         if (this-&gt;head.type != exp.head.type) {</span>
+<span class="lineNum">      48 </span><span class="lineNoCov">          0 :                 return false;</span>
+<span class="lineNum">      49 </span>            :         }
+<span class="lineNum">      50 </span><span class="lineCov">       2038 :         if (this-&gt;head.type == NoneType) {</span>
+<span class="lineNum">      51 </span><span class="lineCov">         20 :                 return true;</span>
+<span class="lineNum">      52 </span>            :         }
+<span class="lineNum">      53 </span><span class="lineCov">       2018 :         if (this-&gt;head.type == BooleanType) {</span>
+<span class="lineNum">      54 </span><span class="lineCov">       1030 :                 if (this-&gt;head.value.bool_value != exp.head.value.bool_value) {</span>
+<span class="lineNum">      55 </span><span class="lineNoCov">          0 :                                 return false;                   </span>
+<span class="lineNum">      56 </span>            :                 }
+<span class="lineNum">      57 </span>            :         }
+<span class="lineNum">      58 </span><span class="lineCov">        988 :         else if (this-&gt;head.type == NumberType) {</span>
+<span class="lineNum">      59 </span><span class="lineCov">        909 :                 if (this-&gt;head.value.num_value != exp.head.value.num_value) {</span>
+<span class="lineNum">      60 </span><span class="lineNoCov">          0 :                         return false;</span>
+<span class="lineNum">      61 </span>            :                 }
+<span class="lineNum">      62 </span>            :         }
+<span class="lineNum">      63 </span><span class="lineCov">         79 :         else if (this-&gt;head.type == SymbolType) {</span>
+<span class="lineNum">      64 </span><span class="lineCov">         18 :                 if (this-&gt;head.value.sym_value != exp.head.value.sym_value) {</span>
+<span class="lineNum">      65 </span><span class="lineNoCov">          0 :                         return false;</span>
+<span class="lineNum">      66 </span>            :                 }
+<span class="lineNum">      67 </span>            :         }
+<span class="lineNum">      68 </span><span class="lineCov">         61 :         else if (this-&gt;head.type==PointType) {</span>
+<span class="lineNum">      69 </span><span class="lineCov">         21 :                 if (this-&gt;head.value.point_value.x != exp.head.value.point_value.x) {</span>
+<span class="lineNum">      70 </span><span class="lineNoCov">          0 :                         return false;</span>
+<span class="lineNum">      71 </span>            :                 }
+<span class="lineNum">      72 </span><span class="lineCov">         21 :                 if (this-&gt;head.value.point_value.y != exp.head.value.point_value.y) {</span>
+<span class="lineNum">      73 </span><span class="lineNoCov">          0 :                         return false;</span>
+<span class="lineNum">      74 </span>            :                 }
+<span class="lineNum">      75 </span>            :         }
+<span class="lineNum">      76 </span><span class="lineCov">         40 :         else if (this-&gt;head.type == LineType) {</span>
+<span class="lineNum">      77 </span><span class="lineCov">         20 :                 if (this-&gt;head.value.line_value.first.x != exp.head.value.line_value.first.x) {</span>
+<span class="lineNum">      78 </span><span class="lineNoCov">          0 :                         return false;</span>
+<span class="lineNum">      79 </span>            :                 }
+<span class="lineNum">      80 </span><span class="lineCov">         20 :                 if (this-&gt;head.value.line_value.first.y != exp.head.value.line_value.first.y) {</span>
+<span class="lineNum">      81 </span><span class="lineNoCov">          0 :                         return false;</span>
+<span class="lineNum">      82 </span>            :                 }
+<span class="lineNum">      83 </span><span class="lineCov">         20 :                 if (this-&gt;head.value.line_value.second.x != exp.head.value.line_value.second.x) {</span>
+<span class="lineNum">      84 </span><span class="lineNoCov">          0 :                         return false;</span>
+<span class="lineNum">      85 </span>            :                 }
+<span class="lineNum">      86 </span><span class="lineCov">         20 :                 if (this-&gt;head.value.line_value.second.y != exp.head.value.line_value.second.y) {</span>
+<span class="lineNum">      87 </span><span class="lineNoCov">          0 :                         return false;</span>
+<span class="lineNum">      88 </span>            :                 }}
+<span class="lineNum">      89 </span><span class="lineCov">         20 :         else if (this-&gt;head.type == ArcType) {</span>
+<span class="lineNum">      90 </span><span class="lineCov">         20 :                 if (this-&gt;head.value.arc_value.center.x != exp.head.value.arc_value.center.x) {</span>
+<span class="lineNum">      91 </span><span class="lineNoCov">          0 :                         return false;</span>
+<span class="lineNum">      92 </span>            :                 }
+<span class="lineNum">      93 </span><span class="lineCov">         20 :                 if (this-&gt;head.value.arc_value.center.y != exp.head.value.arc_value.center.y) {</span>
+<span class="lineNum">      94 </span><span class="lineNoCov">          0 :                         return false;</span>
+<span class="lineNum">      95 </span>            :                 }
+<span class="lineNum">      96 </span><span class="lineCov">         20 :                 if (this-&gt;head.value.arc_value.start.x != exp.head.value.arc_value.start.x) {</span>
+<span class="lineNum">      97 </span><span class="lineNoCov">          0 :                         return false;</span>
+<span class="lineNum">      98 </span>            :                 }
+<span class="lineNum">      99 </span><span class="lineCov">         20 :                 if (this-&gt;head.value.arc_value.start.y != exp.head.value.arc_value.start.y) {</span>
+<span class="lineNum">     100 </span><span class="lineNoCov">          0 :                         return false;</span>
+<span class="lineNum">     101 </span>            :                 }
+<span class="lineNum">     102 </span><span class="lineCov">         20 :                 if (this-&gt;head.value.arc_value.span != exp.head.value.arc_value.span) {</span>
+<span class="lineNum">     103 </span><span class="lineNoCov">          0 :                         return false;</span>
+<span class="lineNum">     104 </span>            :                 }}
+<a name="105"><span class="lineNum">     105 </span><span class="lineCov">       2018 :   return true;</span></a>
+<span class="lineNum">     106 </span>            : }
+<span class="lineNum">     107 </span><span class="lineCov">       4076 : std::ostream &amp; operator&lt;&lt;(std::ostream &amp; out, const Expression &amp; exp){</span>
+<span class="lineNum">     108 </span>            :   // TODO: implement this function
+<span class="lineNum">     109 </span>            :         //output the value of the head.
+<span class="lineNum">     110 </span><span class="lineCov">       4076 :         if (exp.head.type == BooleanType) {</span>
+<span class="lineNum">     111 </span><span class="lineCov">       4120 :                 std::string booloutput;</span>
+<span class="lineNum">     112 </span><span class="lineCov">       2060 :                 if (exp.head.value.bool_value) {</span>
+<span class="lineNum">     113 </span><span class="lineCov">       1164 :                         booloutput = &quot;True&quot;;</span>
+<span class="lineNum">     114 </span>            :                 }
+<span class="lineNum">     115 </span><span class="lineCov">        896 :                 else if (!exp.head.value.bool_value ) {</span>
+<span class="lineNum">     116 </span><span class="lineCov">        896 :                         booloutput = &quot;False&quot;;</span>
+<span class="lineNum">     117 </span>            :                 }
+<span class="lineNum">     118 </span><span class="lineCov">       2060 :                 out &lt;&lt; &quot;(&quot; &lt;&lt; booloutput &lt;&lt; &quot;)&quot; &lt;&lt; std::endl;;</span>
+<span class="lineNum">     119 </span>            :         }
+<span class="lineNum">     120 </span><span class="lineCov">       2016 :         else if (exp.head.type == NumberType) {</span>
+<span class="lineNum">     121 </span><span class="lineCov">       1818 :                 out &lt;&lt; &quot;(&quot; &lt;&lt; exp.head.value.num_value &lt;&lt; &quot;)&quot; &lt;&lt; std::endl;</span>
+<span class="lineNum">     122 </span>            :         }
+<span class="lineNum">     123 </span><span class="lineCov">        198 :         else if (exp.head.type == SymbolType) {</span>
+<span class="lineNum">     124 </span><span class="lineCov">         36 :                 out &lt;&lt; &quot;(&quot; &lt;&lt; exp.head.value.sym_value &lt;&lt; &quot;)&quot; &lt;&lt; std::endl;</span>
+<span class="lineNum">     125 </span>            :         }
+<span class="lineNum">     126 </span><span class="lineCov">        162 :         else if (exp.head.type == NoneType) {</span>
+<span class="lineNum">     127 </span><span class="lineCov">         40 :                 out &lt;&lt; &quot;( &quot;&lt;&lt; &quot;)&quot; &lt;&lt; std::endl;</span>
+<span class="lineNum">     128 </span>            :         }
+<span class="lineNum">     129 </span>            :         else {
+<span class="lineNum">     130 </span><span class="lineCov">        122 :                 out &lt;&lt; &quot;Error: the expression is invalid.&quot; &lt;&lt; std::endl;</span>
+<span class="lineNum">     131 </span>            :         }
+<a name="132"><span class="lineNum">     132 </span><span class="lineCov">       4076 :   return out;</span></a>
+<span class="lineNum">     133 </span>            : }
+<span class="lineNum">     134 </span><span class="lineCov">      21282 : bool token_to_atom(const std::string &amp; token, Atom &amp; atom){</span>
+<span class="lineNum">     135 </span>            :   // TODO: implement this function
+<span class="lineNum">     136 </span>            :   // return true if it a token is valid. otherwise, return false.
+<span class="lineNum">     137 </span>            :         //a symbol and a number
+<span class="lineNum">     138 </span>            :         //3a invalid return false
+<span class="lineNum">     139 </span><span class="lineCov">      21282 :         if (issymbol(token)) {</span>
+<span class="lineNum">     140 </span><span class="lineCov">      10074 :                 atom.type = SymbolType;</span>
+<span class="lineNum">     141 </span><span class="lineCov">      10074 :                 atom.value.sym_value = token;</span>
+<span class="lineNum">     142 </span>            :         }
+<span class="lineNum">     143 </span><span class="lineCov">      11208 :         else if (isvalue(token)) {</span>
+<span class="lineNum">     144 </span><span class="lineCov">       8744 :                 atom.type = NumberType;</span>
+<span class="lineNum">     145 </span><span class="lineCov">       8744 :                 atom.value.num_value = stod(token);</span>
+<span class="lineNum">     146 </span>            :         }
+<span class="lineNum">     147 </span><span class="lineCov">       2464 :         else if (token == &quot;True&quot;) {</span>
+<span class="lineNum">     148 </span><span class="lineCov">        998 :                 atom.type = BooleanType;</span>
+<span class="lineNum">     149 </span><span class="lineCov">        998 :                 atom.value.bool_value = true;</span>
+<span class="lineNum">     150 </span>            :         }
+<span class="lineNum">     151 </span><span class="lineCov">       1466 :         else if (token == &quot;true&quot;) {</span>
+<span class="lineNum">     152 </span><span class="lineCov">        704 :                 atom.type = BooleanType;</span>
+<span class="lineNum">     153 </span><span class="lineCov">        704 :                 atom.value.bool_value = true;</span>
+<span class="lineNum">     154 </span>            :         }
+<span class="lineNum">     155 </span><span class="lineCov">        762 :         else if (token == &quot;false&quot;) {</span>
+<span class="lineNum">     156 </span><span class="lineCov">         62 :                 atom.type = BooleanType;</span>
+<span class="lineNum">     157 </span><span class="lineCov">         62 :                 atom.value.bool_value = false;</span>
+<span class="lineNum">     158 </span>            :         }
+<span class="lineNum">     159 </span><span class="lineCov">        700 :         else if (token == &quot;False&quot;) {</span>
+<span class="lineNum">     160 </span><span class="lineCov">        660 :                 atom.type = BooleanType;</span>
+<span class="lineNum">     161 </span><span class="lineCov">        660 :                 atom.value.bool_value = false;</span>
+<span class="lineNum">     162 </span>            :         }
+<span class="lineNum">     163 </span>            :         else {
+<span class="lineNum">     164 </span><span class="lineCov">         40 :                 return false;</span>
+<span class="lineNum">     165 </span>            :         }
+<a name="166"><span class="lineNum">     166 </span><span class="lineCov">      21242 :   return true;</span></a>
+<span class="lineNum">     167 </span>            : }
+<span class="lineNum">     168 </span><span class="lineCov">      21408 : bool issymbol(const std::string &amp; token) {</span>
+<span class="lineNum">     169 </span><span class="lineCov">      21408 :                 if (isdigit(token[0])!=0) {</span>
+<span class="lineNum">     170 </span><span class="lineCov">       8152 :                         return false;</span>
+<span class="lineNum">     171 </span>            :                 }
+<span class="lineNum">     172 </span><span class="lineCov">      13256 :                 if (token == &quot;True&quot;) {</span>
+<span class="lineNum">     173 </span><span class="lineCov">       1016 :                         return false;</span>
+<span class="lineNum">     174 </span>            :                 }
+<span class="lineNum">     175 </span><span class="lineCov">      12240 :                 if (token == &quot;False&quot;) {</span>
+<span class="lineNum">     176 </span><span class="lineCov">        678 :                         return false;</span>
+<span class="lineNum">     177 </span>            :                 }
+<span class="lineNum">     178 </span><span class="lineCov">      11562 :                 if (token == &quot;true&quot;) {</span>
+<span class="lineNum">     179 </span><span class="lineCov">        704 :                         return false;</span>
+<span class="lineNum">     180 </span>            :                 }
+<span class="lineNum">     181 </span><span class="lineCov">      10858 :                 if (token == &quot;false&quot;) {</span>
+<span class="lineNum">     182 </span><span class="lineCov">         62 :                         return false;</span>
+<span class="lineNum">     183 </span>            :                 }
+<span class="lineNum">     184 </span><span class="lineCov">      10796 :                 if (token[0] == '+') {</span>
+<span class="lineNum">     185 </span><span class="lineCov">        798 :                         if (isdigit(token[1])!=0) {</span>
+<span class="lineNum">     186 </span><span class="lineCov">         98 :                                 return false;</span>
+<span class="lineNum">     187 </span>            :                         }
+<span class="lineNum">     188 </span>            :                 }
+<span class="lineNum">     189 </span><span class="lineCov">      10698 :                  if (token[0] == '-') {</span>
+<span class="lineNum">     190 </span><span class="lineCov">       1066 :                         if (isdigit(token[1])!=0) {</span>
+<span class="lineNum">     191 </span><span class="lineCov">        606 :                                 return false;</span>
+<span class="lineNum">     192 </span>            :                         }
+<span class="lineNum">     193 </span>            :                 }
+<a name="194"><span class="lineNum">     194 </span><span class="lineCov">      10092 :         return true;</span></a>
+<span class="lineNum">     195 </span>            : }
+<span class="lineNum">     196 </span><span class="lineCov">      11334 : bool isvalue(const std::string&amp; token) {</span>
+<span class="lineNum">     197 </span><span class="lineCov">      11334 :         auto dot = 0;</span>
+<span class="lineNum">     198 </span><span class="lineCov">      11334 :         auto ecount = 0;</span>
+<span class="lineNum">     199 </span><span class="lineCov">      22912 :         for (unsigned int i=0; i &lt; token.length(); i++) {</span>
+<span class="lineNum">     200 </span><span class="lineCov">      14132 :                 if (token[i] == '.') {</span>
+<span class="lineNum">     201 </span><span class="lineCov">        156 :                         dot++;</span>
+<span class="lineNum">     202 </span><span class="lineCov">        156 :                         if (dot &gt; 1) {</span>
+<span class="lineNum">     203 </span><span class="lineCov">         18 :                                 return false;</span>
+<span class="lineNum">     204 </span>            :                         }
+<span class="lineNum">     205 </span>            :                 }
+<span class="lineNum">     206 </span><span class="lineCov">      14114 :                 if (isdigit(token[i])==0) {</span>
+<span class="lineNum">     207 </span><span class="lineCov">       3556 :                         if (token[i] != '.') {</span>
+<span class="lineNum">     208 </span><span class="lineCov">       3418 :                                 if (token[i] != '+') {</span>
+<span class="lineNum">     209 </span><span class="lineCov">       3280 :                                         if (token[i] != '-') {</span>
+<span class="lineNum">     210 </span><span class="lineCov">       2634 :                                                 if (token[i]!= 'e') {</span>
+<span class="lineNum">     211 </span><span class="lineCov">       2518 :                                                         return false;</span>
+<span class="lineNum">     212 </span>            :                                                 }
+<span class="lineNum">     213 </span>            :                                         }
+<span class="lineNum">     214 </span>            :                                 }
+<span class="lineNum">     215 </span>            :                         }
+<span class="lineNum">     216 </span>            :                 }
+<span class="lineNum">     217 </span><span class="lineCov">      11596 :                 if (token[i] == 'e') {</span>
+<span class="lineNum">     218 </span><span class="lineCov">        116 :                         ecount++;</span>
+<span class="lineNum">     219 </span><span class="lineCov">        116 :                         if (ecount &gt; 1) {</span>
+<span class="lineNum">     220 </span><span class="lineCov">         18 :                                 return false;</span>
+<span class="lineNum">     221 </span>            :                         }
+<span class="lineNum">     222 </span>            :                 }
+<span class="lineNum">     223 </span>            :         }
+<span class="lineNum">     224 </span><span class="lineCov">       8780 :         return true;</span>
+<span class="lineNum">     225 </span>            : }
+</pre>
+      </td>
+    </tr>
+  </table>
+  <br>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="ruler"><img src="../glass.png" width=3 height=3 alt=""></td></tr>
+    <tr><td class="versionInfo">Generated by: <a href="http://ltp.sourceforge.net/coverage/lcov.php" target="_parent">LCOV version 1.13</a></td></tr>
+  </table>
+  <br>
+
+</body>
+</html>

@@ -1,0 +1,314 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>LCOV - Coverage.combined.cleaned.mocrm - /vagrant/qt_interpreter.cpp</title>
+  <link rel="stylesheet" type="text/css" href="../gcov.css">
+</head>
+
+<body>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="title">LCOV - code coverage report</td></tr>
+    <tr><td class="ruler"><img src="../glass.png" width=3 height=3 alt=""></td></tr>
+
+    <tr>
+      <td width="100%">
+        <table cellpadding=1 border=0 width="100%">
+          <tr>
+            <td width="10%" class="headerItem">Current view:</td>
+            <td width="35%" class="headerValue"><a href="../index.html">top level</a> - <a href="index.html">vagrant</a> - qt_interpreter.cpp<span style="font-size: 80%;"> (source / <a href="qt_interpreter.cpp.func-sort-c.html">functions</a>)</span></td>
+            <td width="5%"></td>
+            <td width="15%"></td>
+            <td width="10%" class="headerCovTableHead">Hit</td>
+            <td width="10%" class="headerCovTableHead">Total</td>
+            <td width="15%" class="headerCovTableHead">Coverage</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Test:</td>
+            <td class="headerValue">Coverage.combined.cleaned.mocrm</td>
+            <td></td>
+            <td class="headerItem">Lines:</td>
+            <td class="headerCovTableEntry">158</td>
+            <td class="headerCovTableEntry">161</td>
+            <td class="headerCovTableEntryHi">98.1 %</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Date:</td>
+            <td class="headerValue">2022-04-19 06:25:44</td>
+            <td></td>
+            <td class="headerItem">Functions:</td>
+            <td class="headerCovTableEntry">13</td>
+            <td class="headerCovTableEntry">13</td>
+            <td class="headerCovTableEntryHi">100.0 %</td>
+          </tr>
+          <tr><td><img src="../glass.png" width=3 height=3 alt=""></td></tr>
+        </table>
+      </td>
+    </tr>
+
+    <tr><td class="ruler"><img src="../glass.png" width=3 height=3 alt=""></td></tr>
+  </table>
+
+  <table cellpadding=0 cellspacing=0 border=0>
+    <tr>
+      <td><br></td>
+    </tr>
+    <tr>
+      <td>
+<pre class="sourceHeading">          Line data    Source code</pre>
+<pre class="source">
+<a name="1"><span class="lineNum">       1 </span>            : #include &quot;qt_interpreter.hpp&quot;</a>
+<span class="lineNum">       2 </span>            : 
+<span class="lineNum">       3 </span>            : #include &lt;string&gt;
+<span class="lineNum">       4 </span>            : #include &lt;sstream&gt;
+<span class="lineNum">       5 </span>            : #include &lt;iostream&gt;
+<span class="lineNum">       6 </span>            : #include &lt;cmath&gt;
+<span class="lineNum">       7 </span>            : #include &lt;fstream&gt;
+<span class="lineNum">       8 </span>            : 
+<span class="lineNum">       9 </span>            : #include &lt;QBrush&gt;
+<span class="lineNum">      10 </span>            : #include &lt;QDebug&gt;
+<span class="lineNum">      11 </span>            : 
+<span class="lineNum">      12 </span>            : #include &quot;qgraphics_arc_item.hpp&quot;
+<span class="lineNum">      13 </span>            : 
+<span class="lineNum">      14 </span>            : #include &quot;interpreter_semantic_error.hpp&quot;
+<span class="lineNum">      15 </span>            : 
+<span class="lineNum">      16 </span>            : #define SQUARE 2
+<span class="lineNum">      17 </span>            : #define diameterofpoint 4
+<span class="lineNum">      18 </span>            : #define radiusofpoint 2
+<span class="lineNum">      19 </span>            : #define Pi atan2(0, -1)
+<span class="lineNum">      20 </span>            : #define degreetoraidus 180 / pi
+<a name="21"><span class="lineNum">      21 </span>            : #define sixteen 16</a>
+<span class="lineNum">      22 </span>            : #define negativesixteen -16
+<span class="lineNum">      23 </span><span class="lineCov">          7 : QtInterpreter::QtInterpreter(QObject * parent): QObject(parent){</span>
+<span class="lineNum">      24 </span>            :   // TODO: your code here...
+<a name="25"><span class="lineNum">      25 </span><span class="lineCov">          7 : }</span></a>
+<span class="lineNum">      26 </span>            : 
+<span class="lineNum">      27 </span><span class="lineCov">         73 : void QtInterpreter::parseAndEvaluate(QString entry, bool mode){</span>
+<span class="lineNum">      28 </span>            :   // TODO: your code here...
+<span class="lineNum">      29 </span>            :         //transfer qstring to string
+<span class="lineNum">      30 </span><span class="lineCov">        146 :         std::string inputfile;</span>
+<span class="lineNum">      31 </span><span class="lineCov">         73 :         inputfile = entry.toStdString();</span>
+<span class="lineNum">      32 </span>            :         bool check;
+<span class="lineNum">      33 </span><span class="lineCov">        146 :         Interpreter interp;</span>
+<span class="lineNum">      34 </span><span class="lineCov">         73 :         bool check1=false;</span>
+<span class="lineNum">      35 </span><span class="lineCov">         73 :         if (mode) {//means read file mode</span>
+<span class="lineNum">      36 </span><span class="lineCov">         14 :                 std::ifstream file(inputfile);</span>
+<span class="lineNum">      37 </span><span class="lineCov">          7 :                 if (!file.good()) {</span>
+<span class="lineNum">      38 </span><span class="lineCov">          7 :                 emiterrormessage(&quot;Error: can't open file&quot;);</span>
+<span class="lineNum">      39 </span>            :                 }
+<span class="lineNum">      40 </span>            :                 else {
+<span class="lineNum">      41 </span><span class="lineNoCov">          0 :                         check = interp.parse(file);</span>
+<span class="lineNum">      42 </span><span class="lineNoCov">          0 :                         check1 = true;</span>
+<span class="lineNum">      43 </span>            :                 }
+<span class="lineNum">      44 </span>            :         }
+<span class="lineNum">      45 </span>            :         else {
+<span class="lineNum">      46 </span><span class="lineCov">        132 :                 std::istringstream file(inputfile);</span>
+<span class="lineNum">      47 </span><span class="lineCov">         66 :                 check = interp.parse(file);</span>
+<span class="lineNum">      48 </span><span class="lineCov">         66 :                 check1 = true;</span>
+<span class="lineNum">      49 </span>            :         }
+<span class="lineNum">      50 </span>            :         //Interpreter interp;
+<span class="lineNum">      51 </span>            :         //interp.parse(file);
+<span class="lineNum">      52 </span><span class="lineCov">         73 :         if (check1) {</span>
+<span class="lineNum">      53 </span><span class="lineCov">         66 :                 if (!check) {</span>
+<span class="lineNum">      54 </span><span class="lineNoCov">          0 :                         emiterrormessage(&quot;Error: parse invalid&quot;);</span>
+<span class="lineNum">      55 </span>            :                 }
+<span class="lineNum">      56 </span>            :                 else {
+<span class="lineNum">      57 </span><span class="lineCov">        132 :                         Expression result;</span>
+<span class="lineNum">      58 </span><span class="lineCov">         66 :                         bool isvalidineval = true;</span>
+<span class="lineNum">      59 </span>            :                         try {
+<span class="lineNum">      60 </span><span class="lineCov">         66 :                                 result = interp.eval();</span>
+<span class="lineNum">      61 </span>            :                         }
+<span class="lineNum">      62 </span><span class="lineCov">         42 :                         catch (std::runtime_error) {</span>
+<span class="lineNum">      63 </span><span class="lineCov">         21 :                                 isvalidineval = false;</span>
+<span class="lineNum">      64 </span>            :                         }
+<span class="lineNum">      65 </span><span class="lineCov">         66 :                         if (isvalidineval) {</span>
+<span class="lineNum">      66 </span><span class="lineCov">         90 :                                 std::vector&lt;Atom&gt; allgraphicitem = interp.getwholegraphicsitems();</span>
+<span class="lineNum">      67 </span><span class="lineCov">         66 :                                 for (unsigned int i = 0; i &lt; allgraphicitem.size(); i++) {</span>
+<span class="lineNum">      68 </span><span class="lineCov">         21 :                                         emitgraphicitem(allgraphicitem[i]);</span>
+<span class="lineNum">      69 </span>            :                                 }
+<span class="lineNum">      70 </span><span class="lineCov">         45 :                                 emitcorrectmessage(result);</span>
+<span class="lineNum">      71 </span>            :                         }
+<span class="lineNum">      72 </span>            :                         else {
+<span class="lineNum">      73 </span><span class="lineCov">         21 :                                 emiterrormessage(&quot;Error: Eval invalid&quot;);</span>
+<span class="lineNum">      74 </span>            :                         }
+<span class="lineNum">      75 </span>            :                 }
+<span class="lineNum">      76 </span>            :         }
+<span class="lineNum">      77 </span>            : 
+<span class="lineNum">      78 </span><span class="lineCov">         73 : }</span>
+<a name="79"><span class="lineNum">      79 </span>            : </a>
+<span class="lineNum">      80 </span>            : //convert the drawing item to signal
+<span class="lineNum">      81 </span><span class="lineCov">         21 : void QtInterpreter::emitgraphicitem(Atom eachitem){</span>
+<span class="lineNum">      82 </span>            :         //seting item
+<span class="lineNum">      83 </span>            :         //QGraphicsItem * item;
+<span class="lineNum">      84 </span><span class="lineCov">         21 :         if (eachitem.type == PointType) {</span>
+<span class="lineNum">      85 </span><span class="lineCov">          7 :                 double height= diameterofpoint;</span>
+<span class="lineNum">      86 </span><span class="lineCov">          7 :                 double width = diameterofpoint;</span>
+<span class="lineNum">      87 </span><span class="lineCov">          7 :                 double x = eachitem.value.point_value.x - radiusofpoint;</span>
+<span class="lineNum">      88 </span><span class="lineCov">          7 :                 double y = eachitem.value.point_value.y - radiusofpoint;</span>
+<span class="lineNum">      89 </span><span class="lineCov">          7 :                 QGraphicsEllipseItem* point = new QGraphicsEllipseItem(x, y,width, height);</span>
+<span class="lineNum">      90 </span><span class="lineCov">          7 :                 point-&gt;setBrush(Qt::black);</span>
+<span class="lineNum">      91 </span><span class="lineCov">          7 :                 emit drawGraphic(point);</span>
+<span class="lineNum">      92 </span>            :         }
+<span class="lineNum">      93 </span><span class="lineCov">         14 :         else if (eachitem.type == LineType) {</span>
+<span class="lineNum">      94 </span><span class="lineCov">          7 :                 double point1x = eachitem.value.line_value.first.x;</span>
+<span class="lineNum">      95 </span><span class="lineCov">          7 :                 double point1y = eachitem.value.line_value.first.y;</span>
+<span class="lineNum">      96 </span><span class="lineCov">          7 :                 double point2x = eachitem.value.line_value.second.x;</span>
+<span class="lineNum">      97 </span><span class="lineCov">          7 :                 double point2y = eachitem.value.line_value.second.y;</span>
+<span class="lineNum">      98 </span><span class="lineCov">          7 :                 QGraphicsLineItem* line = new QGraphicsLineItem(point1x, point1y, point2x, point2y);</span>
+<span class="lineNum">      99 </span><span class="lineCov">          7 :                 emit drawGraphic(line);</span>
+<span class="lineNum">     100 </span>            :         }
+<span class="lineNum">     101 </span><span class="lineCov">          7 :         else if (eachitem.type == ArcType) {</span>
+<span class="lineNum">     102 </span><span class="lineCov">          7 :                 double pi = Pi;</span>
+<span class="lineNum">     103 </span><span class="lineCov">          7 :                 double centerx = eachitem.value.arc_value.center.x;</span>
+<span class="lineNum">     104 </span><span class="lineCov">          7 :                 double centery = eachitem.value.arc_value.center.y;</span>
+<span class="lineNum">     105 </span><span class="lineCov">          7 :                 double startx = eachitem.value.arc_value.start.x;</span>
+<span class="lineNum">     106 </span><span class="lineCov">          7 :                 double starty = eachitem.value.arc_value.start.y;</span>
+<span class="lineNum">     107 </span><span class="lineCov">          7 :                 double spanangle = eachitem.value.arc_value.span;</span>
+<span class="lineNum">     108 </span><span class="lineCov">          7 :                 spanangle = spanangle * degreetoraidus * sixteen;//transfer the span angle to radian</span>
+<span class="lineNum">     109 </span><span class="lineCov">          7 :                 double radius = sqrt(pow(centerx - startx, SQUARE) + pow(centery - starty, SQUARE));//use a^2+b^2=c^2 to find the radius</span>
+<span class="lineNum">     110 </span><span class="lineCov">          7 :                 double rectx = centerx - radius;</span>
+<span class="lineNum">     111 </span><span class="lineCov">          7 :                 double recty = centery - radius;</span>
+<span class="lineNum">     112 </span><span class="lineCov">          7 :                 double diameter = SQUARE * radius;</span>
+<span class="lineNum">     113 </span><span class="lineCov">          7 :                 double rectwidth = diameter;</span>
+<span class="lineNum">     114 </span><span class="lineCov">          7 :                 double height = diameter;</span>
+<span class="lineNum">     115 </span><span class="lineCov">          7 :                 double startangle = atan2(starty - centery, startx - centerx) * degreetoraidus * negativesixteen;</span>
+<span class="lineNum">     116 </span>            :                 //QGraphicsEllipseItem* arc = new QGraphicsArcItem(rectx, recty, rectwidth, height);
+<span class="lineNum">     117 </span><span class="lineCov">          7 :                 QGraphicsArcItem* arc=new QGraphicsArcItem(rectx, recty, rectwidth, height);</span>
+<span class="lineNum">     118 </span><span class="lineCov">          7 :                 arc-&gt;setStartAngle(startangle);</span>
+<span class="lineNum">     119 </span><span class="lineCov">          7 :                 arc-&gt;setSpanAngle(spanangle);</span>
+<span class="lineNum">     120 </span><span class="lineCov">          7 :                 emit drawGraphic(arc);</span>
+<span class="lineNum">     121 </span>            :         }
+<span class="lineNum">     122 </span>            : //      emit drawGraphic(item);//convert to signal
+<span class="lineNum">     123 </span>            : 
+<a name="124"><span class="lineNum">     124 </span><span class="lineCov">         21 : }</span></a>
+<span class="lineNum">     125 </span>            : 
+<span class="lineNum">     126 </span><span class="lineCov">         28 : void QtInterpreter::emiterrormessage(QString message) {</span>
+<span class="lineNum">     127 </span>            :         //QString message = &quot;The entry is invalid&quot;;
+<span class="lineNum">     128 </span><span class="lineCov">         28 :         emit error(message);</span>
+<a name="129"><span class="lineNum">     129 </span><span class="lineCov">         28 : }</span></a>
+<span class="lineNum">     130 </span>            : 
+<span class="lineNum">     131 </span><span class="lineCov">         45 : void QtInterpreter::emitcorrectmessage(Expression result) {</span>
+<span class="lineNum">     132 </span><span class="lineCov">         45 :         if (result.head.type == BooleanType) {</span>
+<span class="lineNum">     133 </span><span class="lineCov">          4 :                 emitbool(result);</span>
+<span class="lineNum">     134 </span>            :         }
+<span class="lineNum">     135 </span><span class="lineCov">         41 :         else if (result.head.type == NumberType) {</span>
+<span class="lineNum">     136 </span><span class="lineCov">         14 :                 emitnumber(result);</span>
+<span class="lineNum">     137 </span>            :         }
+<span class="lineNum">     138 </span><span class="lineCov">         27 :         else if (result.head.type == NoneType) {</span>
+<span class="lineNum">     139 </span><span class="lineCov">         21 :                 emitnone();</span>
+<span class="lineNum">     140 </span>            :         }
+<span class="lineNum">     141 </span><span class="lineCov">          6 :         else if (result.head.type == PointType) {</span>
+<span class="lineNum">     142 </span><span class="lineCov">          2 :                 emitpoint(result);</span>
+<span class="lineNum">     143 </span>            :         }
+<span class="lineNum">     144 </span><span class="lineCov">          4 :         else if (result.head.type == LineType) {</span>
+<span class="lineNum">     145 </span><span class="lineCov">          2 :                 emitline(result);</span>
+<span class="lineNum">     146 </span>            :         }
+<span class="lineNum">     147 </span><span class="lineCov">          2 :         else if (result.head.type == ArcType) {</span>
+<span class="lineNum">     148 </span><span class="lineCov">          2 :                 emitarc(result);</span>
+<span class="lineNum">     149 </span>            :         }
+<a name="150"><span class="lineNum">     150 </span><span class="lineCov">         45 : }</span></a>
+<span class="lineNum">     151 </span>            : 
+<span class="lineNum">     152 </span><span class="lineCov">          4 : void QtInterpreter::emitbool(Expression result) {</span>
+<span class="lineNum">     153 </span><span class="lineCov">          8 :         QString message;</span>
+<span class="lineNum">     154 </span><span class="lineCov">          4 :         if (result.head.value.bool_value) {</span>
+<span class="lineNum">     155 </span><span class="lineCov">          2 :                 message = &quot;(True)&quot;;</span>
+<span class="lineNum">     156 </span><span class="lineCov">          2 :                 emit info(message);</span>
+<span class="lineNum">     157 </span>            :         }
+<span class="lineNum">     158 </span>            :         else {
+<span class="lineNum">     159 </span><span class="lineCov">          2 :                 message = &quot;(False)&quot;;</span>
+<span class="lineNum">     160 </span><span class="lineCov">          2 :                 emit info(message);</span>
+<span class="lineNum">     161 </span>            :         }
+<a name="162"><span class="lineNum">     162 </span><span class="lineCov">          4 : }</span></a>
+<span class="lineNum">     163 </span>            : 
+<span class="lineNum">     164 </span><span class="lineCov">          2 : void QtInterpreter::emitpoint(Expression result) {</span>
+<span class="lineNum">     165 </span><span class="lineCov">          4 :         QString message;</span>
+<span class="lineNum">     166 </span><span class="lineCov">          2 :         message.append(&quot;(&quot;);</span>
+<span class="lineNum">     167 </span><span class="lineCov">          4 :         QString x = QString::number(result.head.value.point_value.x);</span>
+<span class="lineNum">     168 </span><span class="lineCov">          2 :         message.append(x);</span>
+<span class="lineNum">     169 </span><span class="lineCov">          2 :         message.append(&quot;,&quot;);</span>
+<span class="lineNum">     170 </span><span class="lineCov">          4 :         QString y = QString::number(result.head.value.point_value.y);</span>
+<span class="lineNum">     171 </span><span class="lineCov">          2 :         message.append(y);</span>
+<span class="lineNum">     172 </span><span class="lineCov">          2 :         message.append(&quot;)&quot;);</span>
+<span class="lineNum">     173 </span><span class="lineCov">          2 :         emit info(message);</span>
+<span class="lineNum">     174 </span><span class="lineCov">          2 : }</span>
+<a name="175"><span class="lineNum">     175 </span>            : </a>
+<span class="lineNum">     176 </span>            : 
+<span class="lineNum">     177 </span><span class="lineCov">         14 : void QtInterpreter::emitnumber(Expression result) {</span>
+<span class="lineNum">     178 </span><span class="lineCov">         28 :         QString message;</span>
+<span class="lineNum">     179 </span><span class="lineCov">         14 :         message.append(&quot;(&quot;);</span>
+<span class="lineNum">     180 </span><span class="lineCov">         28 :         QString numbervalue = QString::number(result.head.value.num_value);</span>
+<span class="lineNum">     181 </span><span class="lineCov">         14 :         message.append(numbervalue);</span>
+<span class="lineNum">     182 </span><span class="lineCov">         14 :         message.append(&quot;)&quot;);</span>
+<span class="lineNum">     183 </span><span class="lineCov">         14 :         emit info(message);</span>
+<a name="184"><span class="lineNum">     184 </span><span class="lineCov">         14 : }</span></a>
+<span class="lineNum">     185 </span>            : 
+<span class="lineNum">     186 </span><span class="lineCov">          2 : void QtInterpreter::emitline(Expression result) {</span>
+<span class="lineNum">     187 </span><span class="lineCov">          4 :         QString message;</span>
+<span class="lineNum">     188 </span><span class="lineCov">          2 :         message.append(&quot;(&quot;);</span>
+<span class="lineNum">     189 </span><span class="lineCov">          2 :         message.append(&quot;(&quot;);</span>
+<span class="lineNum">     190 </span><span class="lineCov">          4 :         QString x1 = QString::number(result.head.value.line_value.first.x);</span>
+<span class="lineNum">     191 </span><span class="lineCov">          2 :         message.append(x1);</span>
+<span class="lineNum">     192 </span><span class="lineCov">          2 :         message.append(&quot;,&quot;);</span>
+<span class="lineNum">     193 </span><span class="lineCov">          4 :         QString y1 = QString::number(result.head.value.line_value.first.y);</span>
+<span class="lineNum">     194 </span><span class="lineCov">          2 :         message.append(y1);</span>
+<span class="lineNum">     195 </span><span class="lineCov">          2 :         message.append(&quot;)&quot;);</span>
+<span class="lineNum">     196 </span><span class="lineCov">          2 :         message.append(&quot;,&quot;);</span>
+<span class="lineNum">     197 </span><span class="lineCov">          2 :         message.append(&quot;(&quot;);</span>
+<span class="lineNum">     198 </span><span class="lineCov">          4 :         QString x2 = QString::number(result.head.value.line_value.second.x);</span>
+<span class="lineNum">     199 </span><span class="lineCov">          2 :         message.append(x2);</span>
+<span class="lineNum">     200 </span><span class="lineCov">          2 :         message.append(&quot;,&quot;);</span>
+<span class="lineNum">     201 </span><span class="lineCov">          4 :         QString y2 = QString::number(result.head.value.line_value.second.y);</span>
+<span class="lineNum">     202 </span><span class="lineCov">          2 :         message.append(y2);</span>
+<span class="lineNum">     203 </span><span class="lineCov">          2 :         message.append(&quot;)&quot;);</span>
+<span class="lineNum">     204 </span><span class="lineCov">          2 :         message.append(&quot;)&quot;);</span>
+<span class="lineNum">     205 </span><span class="lineCov">          2 :         emit info(message);</span>
+<span class="lineNum">     206 </span><span class="lineCov">          2 : }</span>
+<a name="207"><span class="lineNum">     207 </span>            : </a>
+<span class="lineNum">     208 </span>            : 
+<span class="lineNum">     209 </span><span class="lineCov">          2 : void QtInterpreter::emitarc(Expression result) {</span>
+<span class="lineNum">     210 </span><span class="lineCov">          4 :         QString message;</span>
+<span class="lineNum">     211 </span><span class="lineCov">          2 :         message.append(&quot;(&quot;);</span>
+<span class="lineNum">     212 </span><span class="lineCov">          2 :         message.append(&quot;(&quot;);</span>
+<span class="lineNum">     213 </span><span class="lineCov">          4 :         QString x1 = QString::number(result.head.value.arc_value.center.x);</span>
+<span class="lineNum">     214 </span><span class="lineCov">          2 :         message.append(x1);</span>
+<span class="lineNum">     215 </span><span class="lineCov">          2 :         message.append(&quot;,&quot;);</span>
+<span class="lineNum">     216 </span><span class="lineCov">          4 :         QString y1 = QString::number(result.head.value.arc_value.center.y);</span>
+<span class="lineNum">     217 </span><span class="lineCov">          2 :         message.append(y1);</span>
+<span class="lineNum">     218 </span><span class="lineCov">          2 :         message.append(&quot;)&quot;);</span>
+<span class="lineNum">     219 </span><span class="lineCov">          2 :         message.append(&quot;,&quot;);</span>
+<span class="lineNum">     220 </span><span class="lineCov">          2 :         message.append(&quot;(&quot;);</span>
+<span class="lineNum">     221 </span><span class="lineCov">          4 :         QString x2 = QString::number(result.head.value.arc_value.start.x);</span>
+<span class="lineNum">     222 </span><span class="lineCov">          2 :         message.append(x2);</span>
+<span class="lineNum">     223 </span><span class="lineCov">          2 :         message.append(&quot;,&quot;);</span>
+<span class="lineNum">     224 </span><span class="lineCov">          4 :         QString y2 = QString::number(result.head.value.arc_value.start.y);</span>
+<span class="lineNum">     225 </span><span class="lineCov">          2 :         message.append(y2);</span>
+<span class="lineNum">     226 </span><span class="lineCov">          2 :         message.append(&quot;)&quot;);</span>
+<span class="lineNum">     227 </span><span class="lineCov">          2 :         message.append(&quot; &quot;);</span>
+<span class="lineNum">     228 </span><span class="lineCov">          4 :         QString span = QString::number(result.head.value.arc_value.span);</span>
+<span class="lineNum">     229 </span><span class="lineCov">          2 :         message.append(span);</span>
+<span class="lineNum">     230 </span><span class="lineCov">          2 :         message.append(&quot;)&quot;);</span>
+<span class="lineNum">     231 </span><span class="lineCov">          2 :         emit info(message);</span>
+<a name="232"><span class="lineNum">     232 </span><span class="lineCov">          2 : }</span></a>
+<span class="lineNum">     233 </span>            : 
+<span class="lineNum">     234 </span><span class="lineCov">         21 : void QtInterpreter::emitnone() {</span>
+<span class="lineNum">     235 </span><span class="lineCov">         42 :         QString message;</span>
+<a name="236"><span class="lineNum">     236 </span><span class="lineCov">         21 :         message = &quot;(None)&quot;;</span></a>
+<span class="lineNum">     237 </span><span class="lineCov">         21 :         emit info(message);</span>
+<span class="lineNum">     238 </span><span class="lineCov">         42 : }</span>
+</pre>
+      </td>
+    </tr>
+  </table>
+  <br>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="ruler"><img src="../glass.png" width=3 height=3 alt=""></td></tr>
+    <tr><td class="versionInfo">Generated by: <a href="http://ltp.sourceforge.net/coverage/lcov.php" target="_parent">LCOV version 1.13</a></td></tr>
+  </table>
+  <br>
+
+</body>
+</html>

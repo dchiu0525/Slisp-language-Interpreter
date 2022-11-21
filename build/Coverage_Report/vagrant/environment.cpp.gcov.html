@@ -1,0 +1,620 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>LCOV - Coverage.combined.cleaned.mocrm - /vagrant/environment.cpp</title>
+  <link rel="stylesheet" type="text/css" href="../gcov.css">
+</head>
+
+<body>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="title">LCOV - code coverage report</td></tr>
+    <tr><td class="ruler"><img src="../glass.png" width=3 height=3 alt=""></td></tr>
+
+    <tr>
+      <td width="100%">
+        <table cellpadding=1 border=0 width="100%">
+          <tr>
+            <td width="10%" class="headerItem">Current view:</td>
+            <td width="35%" class="headerValue"><a href="../index.html">top level</a> - <a href="index.html">vagrant</a> - environment.cpp<span style="font-size: 80%;"> (source / <a href="environment.cpp.func-sort-c.html">functions</a>)</span></td>
+            <td width="5%"></td>
+            <td width="15%"></td>
+            <td width="10%" class="headerCovTableHead">Hit</td>
+            <td width="10%" class="headerCovTableHead">Total</td>
+            <td width="15%" class="headerCovTableHead">Coverage</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Test:</td>
+            <td class="headerValue">Coverage.combined.cleaned.mocrm</td>
+            <td></td>
+            <td class="headerItem">Lines:</td>
+            <td class="headerCovTableEntry">368</td>
+            <td class="headerCovTableEntry">374</td>
+            <td class="headerCovTableEntryHi">98.4 %</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Date:</td>
+            <td class="headerValue">2022-04-19 06:25:44</td>
+            <td></td>
+            <td class="headerItem">Functions:</td>
+            <td class="headerCovTableEntry">29</td>
+            <td class="headerCovTableEntry">29</td>
+            <td class="headerCovTableEntryHi">100.0 %</td>
+          </tr>
+          <tr><td><img src="../glass.png" width=3 height=3 alt=""></td></tr>
+        </table>
+      </td>
+    </tr>
+
+    <tr><td class="ruler"><img src="../glass.png" width=3 height=3 alt=""></td></tr>
+  </table>
+
+  <table cellpadding=0 cellspacing=0 border=0>
+    <tr>
+      <td><br></td>
+    </tr>
+    <tr>
+      <td>
+<pre class="sourceHeading">          Line data    Source code</pre>
+<pre class="source">
+<a name="1"><span class="lineNum">       1 </span>            : #include &quot;environment.hpp&quot;</a>
+<span class="lineNum">       2 </span>            : 
+<span class="lineNum">       3 </span>            : #include &lt;cassert&gt;
+<span class="lineNum">       4 </span>            : #include &lt;cmath&gt;
+<span class="lineNum">       5 </span>            : 
+<a name="6"><span class="lineNum">       6 </span>            : #include &quot;interpreter_semantic_error.hpp&quot;</a>
+<span class="lineNum">       7 </span>            : 
+<span class="lineNum">       8 </span><span class="lineCov">         58 : Expression enot(const std::vector&lt;Atom&gt;&amp; args) {</span>
+<span class="lineNum">       9 </span><span class="lineCov">         58 :         if(args.size()!=1){</span>
+<span class="lineNum">      10 </span><span class="lineCov">         12 :                 return Expression();</span>
+<span class="lineNum">      11 </span>            :         }
+<span class="lineNum">      12 </span><span class="lineCov">         46 :         if (args[0].type != BooleanType) {</span>
+<span class="lineNum">      13 </span><span class="lineCov">         12 :                 return Expression();</span>
+<span class="lineNum">      14 </span>            :         }
+<span class="lineNum">      15 </span><span class="lineCov">         68 :         Expression notoperation;</span>
+<span class="lineNum">      16 </span><span class="lineCov">         34 :         if (args[0].value.bool_value ) {</span>
+<span class="lineNum">      17 </span><span class="lineCov">         23 :                 notoperation.head.type = BooleanType;</span>
+<span class="lineNum">      18 </span><span class="lineCov">         23 :                 notoperation.head.value.bool_value = false;</span>
+<span class="lineNum">      19 </span>            :         }
+<span class="lineNum">      20 </span><span class="lineCov">         11 :         else if (!args[0].value.bool_value ) {</span>
+<span class="lineNum">      21 </span><span class="lineCov">         11 :                 notoperation.head.type = BooleanType;</span>
+<span class="lineNum">      22 </span><span class="lineCov">         11 :                 notoperation.head.value.bool_value = true;</span>
+<span class="lineNum">      23 </span>            :         }
+<span class="lineNum">      24 </span><span class="lineCov">         34 :         return notoperation;</span>
+<a name="25"><span class="lineNum">      25 </span>            : }</a>
+<span class="lineNum">      26 </span>            : 
+<span class="lineNum">      27 </span><span class="lineCov">         89 : Expression eand (const std::vector&lt;Atom&gt;&amp; args) {</span>
+<span class="lineNum">      28 </span><span class="lineCov">         89 :         if (args.empty()) {</span>
+<span class="lineNum">      29 </span><span class="lineNoCov">          0 :                 return Expression();</span>
+<span class="lineNum">      30 </span>            :         }
+<span class="lineNum">      31 </span><span class="lineCov">        178 :         Expression andoperation;</span>
+<span class="lineNum">      32 </span><span class="lineCov">         89 :         andoperation.head.type = BooleanType;</span>
+<span class="lineNum">      33 </span><span class="lineCov">         89 :         andoperation.head.value.bool_value = args[0].value.bool_value;</span>
+<span class="lineNum">      34 </span><span class="lineCov">        254 :         for (unsigned int i = 0; i &lt; args.size(); i++) {</span>
+<span class="lineNum">      35 </span><span class="lineCov">        176 :                 if (args[i].type != BooleanType) {</span>
+<span class="lineNum">      36 </span><span class="lineCov">         11 :                         return Expression();</span>
+<span class="lineNum">      37 </span>            :                 }
+<span class="lineNum">      38 </span><span class="lineCov">        165 :                 if (!args[i].value.bool_value ) {</span>
+<span class="lineNum">      39 </span><span class="lineCov">         57 :                         andoperation.head.value.bool_value = args[i].value.bool_value;</span>
+<span class="lineNum">      40 </span>            :                 }
+<span class="lineNum">      41 </span>            :         }
+<span class="lineNum">      42 </span><span class="lineCov">         78 :         return andoperation;</span>
+<a name="43"><span class="lineNum">      43 </span>            : }</a>
+<span class="lineNum">      44 </span>            : 
+<span class="lineNum">      45 </span><span class="lineCov">         92 : Expression eor (const std::vector&lt;Atom&gt;&amp;args) {</span>
+<span class="lineNum">      46 </span><span class="lineCov">         92 :         if (args.empty()) {</span>
+<span class="lineNum">      47 </span><span class="lineNoCov">          0 :                 return Expression();</span>
+<span class="lineNum">      48 </span>            :         }
+<span class="lineNum">      49 </span><span class="lineCov">        184 :         Expression oroperation;</span>
+<span class="lineNum">      50 </span><span class="lineCov">         92 :         oroperation.head.type = BooleanType;</span>
+<span class="lineNum">      51 </span><span class="lineCov">         92 :         oroperation.head.value.bool_value = false;</span>
+<span class="lineNum">      52 </span><span class="lineCov">        263 :         for (unsigned int i = 0; i &lt; args.size(); i++) {</span>
+<span class="lineNum">      53 </span><span class="lineCov">        182 :                 if (args[i].type != BooleanType) {</span>
+<span class="lineNum">      54 </span><span class="lineCov">         11 :                         return Expression();</span>
+<span class="lineNum">      55 </span>            :                 }
+<span class="lineNum">      56 </span><span class="lineCov">        171 :                 if (args[i].value.bool_value) {</span>
+<span class="lineNum">      57 </span><span class="lineCov">         90 :                         oroperation.head.value.bool_value = true;</span>
+<span class="lineNum">      58 </span>            :                 }
+<span class="lineNum">      59 </span>            :         }
+<span class="lineNum">      60 </span><span class="lineCov">         81 :         return oroperation;</span>
+<a name="61"><span class="lineNum">      61 </span>            : }</a>
+<span class="lineNum">      62 </span>            : 
+<span class="lineNum">      63 </span><span class="lineCov">        111 : Expression smaller(const std::vector&lt;Atom&gt;&amp; args) {</span>
+<span class="lineNum">      64 </span><span class="lineCov">        111 :         if (args.size() != 2) {</span>
+<span class="lineNum">      65 </span><span class="lineCov">         11 :                 return Expression();</span>
+<span class="lineNum">      66 </span>            :         }
+<span class="lineNum">      67 </span><span class="lineCov">        100 :         if (args[0].type != NumberType) {</span>
+<span class="lineNum">      68 </span><span class="lineCov">         11 :                 return Expression();</span>
+<span class="lineNum">      69 </span>            :         }
+<span class="lineNum">      70 </span><span class="lineCov">         89 :         if (args[1].type != NumberType) {</span>
+<span class="lineNum">      71 </span><span class="lineCov">         11 :                 return Expression();</span>
+<span class="lineNum">      72 </span>            :         }
+<span class="lineNum">      73 </span><span class="lineCov">        156 :         Expression smalleroperator;</span>
+<span class="lineNum">      74 </span><span class="lineCov">         78 :         if (args[0].value.num_value &lt; args[1].value.num_value) {</span>
+<span class="lineNum">      75 </span><span class="lineCov">         57 :                 smalleroperator.head.type = BooleanType;</span>
+<span class="lineNum">      76 </span><span class="lineCov">         57 :                 smalleroperator.head.value.bool_value = true;</span>
+<span class="lineNum">      77 </span>            :         }
+<span class="lineNum">      78 </span>            :         else {
+<span class="lineNum">      79 </span><span class="lineCov">         21 :                 smalleroperator.head.type = BooleanType;</span>
+<span class="lineNum">      80 </span><span class="lineCov">         21 :                 smalleroperator.head.value.bool_value = false;</span>
+<span class="lineNum">      81 </span>            :         }
+<span class="lineNum">      82 </span><span class="lineCov">         78 :         return smalleroperator;</span>
+<a name="83"><span class="lineNum">      83 </span>            : }</a>
+<span class="lineNum">      84 </span>            : 
+<span class="lineNum">      85 </span><span class="lineCov">        114 : Expression smallerandequal(const std::vector&lt;Atom&gt;&amp; args) {</span>
+<span class="lineNum">      86 </span><span class="lineCov">        114 :         if (args.size() != 2) {</span>
+<span class="lineNum">      87 </span><span class="lineCov">         11 :                 return Expression();</span>
+<span class="lineNum">      88 </span>            :         }
+<span class="lineNum">      89 </span><span class="lineCov">        103 :         if (args[0].type != NumberType) {</span>
+<span class="lineNum">      90 </span><span class="lineCov">         11 :                 return Expression();</span>
+<span class="lineNum">      91 </span>            :         }
+<span class="lineNum">      92 </span><span class="lineCov">         92 :         if (args[1].type != NumberType) {</span>
+<span class="lineNum">      93 </span><span class="lineCov">         11 :                 return Expression();</span>
+<span class="lineNum">      94 </span>            :         }
+<span class="lineNum">      95 </span><span class="lineCov">        162 :         Expression smallerandequaloperator;</span>
+<span class="lineNum">      96 </span><span class="lineCov">         81 :         if (args[0].value.num_value &lt;= args[1].value.num_value) {</span>
+<span class="lineNum">      97 </span><span class="lineCov">         51 :                 smallerandequaloperator.head.type = BooleanType;</span>
+<span class="lineNum">      98 </span><span class="lineCov">         51 :                 smallerandequaloperator.head.value.bool_value = true;</span>
+<span class="lineNum">      99 </span>            :         }
+<span class="lineNum">     100 </span>            :         else {
+<span class="lineNum">     101 </span><span class="lineCov">         30 :                 smallerandequaloperator.head.type = BooleanType;</span>
+<span class="lineNum">     102 </span><span class="lineCov">         30 :                 smallerandequaloperator.head.value.bool_value = false;</span>
+<span class="lineNum">     103 </span>            :         }
+<span class="lineNum">     104 </span><span class="lineCov">         81 :         return smallerandequaloperator;</span>
+<a name="105"><span class="lineNum">     105 </span>            : }</a>
+<span class="lineNum">     106 </span>            : 
+<span class="lineNum">     107 </span><span class="lineCov">         84 : Expression grater(const std::vector&lt;Atom&gt;&amp; args) {</span>
+<span class="lineNum">     108 </span><span class="lineCov">         84 :         if (args.size() != 2) {</span>
+<span class="lineNum">     109 </span><span class="lineCov">         11 :                 return Expression();</span>
+<span class="lineNum">     110 </span>            :         }
+<span class="lineNum">     111 </span><span class="lineCov">         73 :         if (args[0].type != NumberType) {</span>
+<span class="lineNum">     112 </span><span class="lineCov">         11 :                 return Expression();</span>
+<span class="lineNum">     113 </span>            :         }
+<span class="lineNum">     114 </span><span class="lineCov">         62 :         if (args[1].type != NumberType) {</span>
+<span class="lineNum">     115 </span><span class="lineCov">         11 :                 return Expression();</span>
+<span class="lineNum">     116 </span>            :         }
+<span class="lineNum">     117 </span><span class="lineCov">        102 :         Expression grateroperator;</span>
+<span class="lineNum">     118 </span><span class="lineCov">         51 :         if (args[0].value.num_value &gt; args[1].value.num_value) {</span>
+<span class="lineNum">     119 </span><span class="lineCov">         21 :                 grateroperator.head.type = BooleanType;</span>
+<span class="lineNum">     120 </span><span class="lineCov">         21 :                 grateroperator.head.value.bool_value = true;</span>
+<span class="lineNum">     121 </span>            :         }
+<span class="lineNum">     122 </span>            :         else {
+<span class="lineNum">     123 </span><span class="lineCov">         30 :                 grateroperator.head.type = BooleanType;</span>
+<span class="lineNum">     124 </span><span class="lineCov">         30 :                 grateroperator.head.value.bool_value = false;</span>
+<span class="lineNum">     125 </span>            :         }
+<span class="lineNum">     126 </span><span class="lineCov">         51 :         return grateroperator;</span>
+<a name="127"><span class="lineNum">     127 </span>            : }</a>
+<span class="lineNum">     128 </span>            : 
+<span class="lineNum">     129 </span><span class="lineCov">        114 : Expression graterandequal(const std::vector&lt;Atom&gt;&amp; args) {</span>
+<span class="lineNum">     130 </span><span class="lineCov">        114 :         if (args.size() != 2) {</span>
+<span class="lineNum">     131 </span><span class="lineCov">         11 :                 return Expression();</span>
+<span class="lineNum">     132 </span>            :         }
+<span class="lineNum">     133 </span><span class="lineCov">        103 :         if (args[0].type != NumberType) {</span>
+<span class="lineNum">     134 </span><span class="lineCov">         11 :                 return Expression();</span>
+<span class="lineNum">     135 </span>            :         }
+<span class="lineNum">     136 </span><span class="lineCov">         92 :         if (args[1].type != NumberType) {</span>
+<span class="lineNum">     137 </span><span class="lineCov">         11 :                 return Expression();</span>
+<span class="lineNum">     138 </span>            :         }
+<span class="lineNum">     139 </span><span class="lineCov">        162 :         Expression graterandequaloperator;</span>
+<span class="lineNum">     140 </span><span class="lineCov">         81 :         if (args[0].value.num_value &gt;= args[1].value.num_value) {</span>
+<span class="lineNum">     141 </span><span class="lineCov">         51 :                 graterandequaloperator.head.type = BooleanType;</span>
+<span class="lineNum">     142 </span><span class="lineCov">         51 :                 graterandequaloperator.head.value.bool_value = true;</span>
+<span class="lineNum">     143 </span>            :         }
+<span class="lineNum">     144 </span>            :         else {
+<span class="lineNum">     145 </span><span class="lineCov">         30 :                 graterandequaloperator.head.type = BooleanType;</span>
+<span class="lineNum">     146 </span><span class="lineCov">         30 :                 graterandequaloperator.head.value.bool_value = false;</span>
+<span class="lineNum">     147 </span>            :         }
+<span class="lineNum">     148 </span><span class="lineCov">         81 :         return graterandequaloperator;</span>
+<a name="149"><span class="lineNum">     149 </span>            : }</a>
+<span class="lineNum">     150 </span>            : 
+<span class="lineNum">     151 </span><span class="lineCov">         75 : Expression equal(const std::vector&lt;Atom&gt;&amp; args) {</span>
+<span class="lineNum">     152 </span><span class="lineCov">         75 :         if (args.size() != 2) {</span>
+<span class="lineNum">     153 </span><span class="lineCov">         11 :                 return Expression();</span>
+<span class="lineNum">     154 </span>            :         }
+<span class="lineNum">     155 </span><span class="lineCov">         64 :         if (args[0].type != NumberType) {</span>
+<span class="lineNum">     156 </span><span class="lineCov">         11 :                 return Expression();</span>
+<span class="lineNum">     157 </span>            :         }
+<span class="lineNum">     158 </span><span class="lineCov">         53 :         if (args[1].type != NumberType) {</span>
+<span class="lineNum">     159 </span><span class="lineCov">         11 :                 return Expression();</span>
+<span class="lineNum">     160 </span>            :         }
+<span class="lineNum">     161 </span><span class="lineCov">         84 :         Expression equaloperator;</span>
+<span class="lineNum">     162 </span><span class="lineCov">         42 :         if (args[0].value.num_value == args[1].value.num_value) {</span>
+<span class="lineNum">     163 </span><span class="lineCov">         21 :                 equaloperator.head.type = BooleanType;</span>
+<span class="lineNum">     164 </span><span class="lineCov">         21 :                 equaloperator.head.value.bool_value = true;</span>
+<span class="lineNum">     165 </span>            :         }
+<span class="lineNum">     166 </span>            :         else {
+<span class="lineNum">     167 </span><span class="lineCov">         21 :                 equaloperator.head.type = BooleanType;</span>
+<span class="lineNum">     168 </span><span class="lineCov">         21 :                 equaloperator.head.value.bool_value = false;</span>
+<span class="lineNum">     169 </span>            :         }
+<span class="lineNum">     170 </span><span class="lineCov">         42 :         return equaloperator;</span>
+<a name="171"><span class="lineNum">     171 </span>            : }</a>
+<span class="lineNum">     172 </span>            : 
+<span class="lineNum">     173 </span><span class="lineCov">        167 : Expression plus(const std::vector&lt;Atom&gt;&amp; args) {</span>
+<span class="lineNum">     174 </span><span class="lineCov">        167 :         if (args.empty()) {</span>
+<span class="lineNum">     175 </span><span class="lineNoCov">          0 :                 return Expression();</span>
+<span class="lineNum">     176 </span>            :         }
+<span class="lineNum">     177 </span><span class="lineCov">        334 :         Expression plusoperator;</span>
+<span class="lineNum">     178 </span><span class="lineCov">        167 :         plusoperator.head.type = NumberType;</span>
+<span class="lineNum">     179 </span><span class="lineCov">        167 :         plusoperator.head.value.num_value = 0;</span>
+<span class="lineNum">     180 </span><span class="lineCov">        605 :         for(unsigned int i=0;i&lt;args.size();i++){</span>
+<span class="lineNum">     181 </span><span class="lineCov">        449 :                 if (args[i].type != NumberType) {</span>
+<span class="lineNum">     182 </span><span class="lineCov">         11 :                         return Expression();</span>
+<span class="lineNum">     183 </span>            :                 }
+<span class="lineNum">     184 </span><span class="lineCov">        438 :                 plusoperator.head.value.num_value = plusoperator.head.value.num_value+args[i].value.num_value;</span>
+<span class="lineNum">     185 </span>            :         }
+<span class="lineNum">     186 </span><span class="lineCov">        156 :         return plusoperator;</span>
+<a name="187"><span class="lineNum">     187 </span>            : }</a>
+<span class="lineNum">     188 </span>            : 
+<span class="lineNum">     189 </span><span class="lineCov">        126 : Expression minusandnegative(const std::vector&lt;Atom&gt;&amp; args) {</span>
+<span class="lineNum">     190 </span><span class="lineCov">        252 :         Expression minusoperator;</span>
+<span class="lineNum">     191 </span><span class="lineCov">        126 :         if (args[0].type != NumberType) {</span>
+<span class="lineNum">     192 </span><span class="lineCov">         22 :                 return Expression();</span>
+<span class="lineNum">     193 </span>            :         }
+<span class="lineNum">     194 </span><span class="lineCov">        104 :         if (args.size() == 2 || args.size() == 1) {</span>
+<span class="lineNum">     195 </span><span class="lineCov">         95 :                 if (args.size() == 2) {//minus</span>
+<span class="lineNum">     196 </span><span class="lineCov">         68 :                         if (args[0].type != NumberType) {</span>
+<span class="lineNum">     197 </span><span class="lineNoCov">          0 :                                 return Expression();</span>
+<span class="lineNum">     198 </span>            :                         }
+<span class="lineNum">     199 </span><span class="lineCov">         68 :                         if (args[1].type != NumberType) {</span>
+<span class="lineNum">     200 </span><span class="lineCov">         11 :                                 return Expression();</span>
+<span class="lineNum">     201 </span>            :                         }
+<span class="lineNum">     202 </span><span class="lineCov">         57 :                         minusoperator.head.type = NumberType;</span>
+<span class="lineNum">     203 </span><span class="lineCov">         57 :                         minusoperator.head.value.num_value = args[0].value.num_value - args[1].value.num_value;</span>
+<span class="lineNum">     204 </span>            :                 }
+<span class="lineNum">     205 </span><span class="lineCov">         27 :                 else if (args.size() == 1) {//negative</span>
+<span class="lineNum">     206 </span><span class="lineCov">         27 :                         minusoperator.head.type = NumberType;</span>
+<span class="lineNum">     207 </span><span class="lineCov">         27 :                         minusoperator.head.value.num_value = 0 - args[0].value.num_value;</span>
+<span class="lineNum">     208 </span>            :                 }
+<span class="lineNum">     209 </span>            :         }
+<span class="lineNum">     210 </span>            :         else {
+<span class="lineNum">     211 </span><span class="lineCov">          9 :                 return Expression();</span>
+<span class="lineNum">     212 </span>            :         }
+<span class="lineNum">     213 </span><span class="lineCov">         84 :         return minusoperator;</span>
+<a name="214"><span class="lineNum">     214 </span>            : }</a>
+<span class="lineNum">     215 </span>            : 
+<span class="lineNum">     216 </span><span class="lineCov">         53 : Expression multi(const std::vector&lt;Atom&gt;&amp; args) {</span>
+<span class="lineNum">     217 </span><span class="lineCov">         53 :         if (args.empty()) {</span>
+<span class="lineNum">     218 </span><span class="lineNoCov">          0 :                 return Expression();</span>
+<span class="lineNum">     219 </span>            :         }
+<span class="lineNum">     220 </span><span class="lineCov">        106 :         Expression multioperator;</span>
+<span class="lineNum">     221 </span><span class="lineCov">         53 :         multioperator.head.type = NumberType;</span>
+<span class="lineNum">     222 </span><span class="lineCov">         53 :         multioperator.head.value.num_value = 1;</span>
+<span class="lineNum">     223 </span><span class="lineCov">        158 :         for (unsigned int i = 0; i &lt; args.size(); i++ ) {</span>
+<span class="lineNum">     224 </span><span class="lineCov">        116 :                 if (args[i].type != NumberType) {</span>
+<span class="lineNum">     225 </span><span class="lineCov">         11 :                         return Expression();</span>
+<span class="lineNum">     226 </span>            :                 }
+<span class="lineNum">     227 </span><span class="lineCov">        105 :                 multioperator.head.value.num_value = multioperator.head.value.num_value * args[i].value.num_value;</span>
+<span class="lineNum">     228 </span>            :         }
+<span class="lineNum">     229 </span><span class="lineCov">         42 :         return multioperator;</span>
+<a name="230"><span class="lineNum">     230 </span>            : }</a>
+<span class="lineNum">     231 </span>            : 
+<span class="lineNum">     232 </span><span class="lineCov">         85 : Expression divide(const std::vector&lt;Atom&gt;&amp; args) {</span>
+<span class="lineNum">     233 </span><span class="lineCov">         85 :         if (args.size() != 2) {</span>
+<span class="lineNum">     234 </span><span class="lineCov">         11 :                 return Expression();</span>
+<span class="lineNum">     235 </span>            :         }
+<span class="lineNum">     236 </span><span class="lineCov">         74 :         if (args[0].type != NumberType) {</span>
+<span class="lineNum">     237 </span><span class="lineCov">         11 :                 return Expression();</span>
+<span class="lineNum">     238 </span>            :         }
+<span class="lineNum">     239 </span><span class="lineCov">         63 :         if (args[1].type != NumberType) {</span>
+<span class="lineNum">     240 </span><span class="lineCov">         11 :                 return Expression();</span>
+<span class="lineNum">     241 </span>            :         }
+<span class="lineNum">     242 </span><span class="lineCov">        104 :         Expression divideoperator;</span>
+<span class="lineNum">     243 </span><span class="lineCov">         52 :         divideoperator.head.type = NumberType;</span>
+<span class="lineNum">     244 </span><span class="lineCov">         52 :         divideoperator.head.value.num_value = args[0].value.num_value / args[1].value.num_value;</span>
+<span class="lineNum">     245 </span><span class="lineCov">         52 :         return divideoperator;</span>
+<a name="246"><span class="lineNum">     246 </span>            : }</a>
+<span class="lineNum">     247 </span>            : 
+<span class="lineNum">     248 </span><span class="lineCov">         75 : Expression log10method(const std::vector&lt;Atom&gt;&amp; args) {</span>
+<span class="lineNum">     249 </span><span class="lineCov">         75 :         if (args.size() != 1) {</span>
+<span class="lineNum">     250 </span><span class="lineCov">          9 :                 return Expression();</span>
+<span class="lineNum">     251 </span>            :         }
+<span class="lineNum">     252 </span><span class="lineCov">         66 :         if (args[0].type != NumberType) {</span>
+<span class="lineNum">     253 </span><span class="lineCov">          9 :                 return Expression();</span>
+<span class="lineNum">     254 </span>            :         }
+<span class="lineNum">     255 </span><span class="lineCov">         57 :         if (args[0].value.num_value &lt; 0) {</span>
+<span class="lineNum">     256 </span><span class="lineCov">          9 :                 return Expression();</span>
+<span class="lineNum">     257 </span>            :         }
+<span class="lineNum">     258 </span><span class="lineCov">         96 :         Expression log10operator;</span>
+<span class="lineNum">     259 </span><span class="lineCov">         48 :         log10operator.head.type = NumberType;</span>
+<span class="lineNum">     260 </span><span class="lineCov">         96 :         auto b = args[0];</span>
+<span class="lineNum">     261 </span><span class="lineCov">         48 :         log10operator.head.value.num_value = log10(b.value.num_value);</span>
+<span class="lineNum">     262 </span><span class="lineCov">         48 :         return log10operator;</span>
+<a name="263"><span class="lineNum">     263 </span>            : }</a>
+<span class="lineNum">     264 </span>            : 
+<span class="lineNum">     265 </span><span class="lineCov">         75 : Expression power(const std::vector&lt;Atom&gt;&amp; args) {</span>
+<span class="lineNum">     266 </span><span class="lineCov">         75 :         if (args.size() != 2) {</span>
+<span class="lineNum">     267 </span><span class="lineCov">          9 :                 return Expression();</span>
+<span class="lineNum">     268 </span>            :         }
+<span class="lineNum">     269 </span><span class="lineCov">         66 :         if (args[0].type != NumberType) {</span>
+<span class="lineNum">     270 </span><span class="lineCov">          9 :                 return Expression();</span>
+<span class="lineNum">     271 </span>            :         }
+<span class="lineNum">     272 </span><span class="lineCov">         57 :         if (args[1].type != NumberType) {</span>
+<span class="lineNum">     273 </span><span class="lineCov">          9 :                 return Expression();</span>
+<span class="lineNum">     274 </span>            :         }
+<span class="lineNum">     275 </span><span class="lineCov">         96 :         Expression powoperation;</span>
+<span class="lineNum">     276 </span><span class="lineCov">         48 :         powoperation.head.type = NumberType;</span>
+<span class="lineNum">     277 </span><span class="lineCov">         48 :         powoperation.head.value.num_value = pow(args[0].value.num_value, args[1].value.num_value);</span>
+<span class="lineNum">     278 </span><span class="lineCov">         48 :         return powoperation;</span>
+<a name="279"><span class="lineNum">     279 </span>            : }</a>
+<span class="lineNum">     280 </span>            : 
+<span class="lineNum">     281 </span><span class="lineCov">        117 : Expression IF(const std::vector&lt;Atom&gt;&amp; args) {</span>
+<span class="lineNum">     282 </span><span class="lineCov">        234 :         Expression ifoperation;</span>
+<span class="lineNum">     283 </span><span class="lineCov">        117 :         if (args[0].type != BooleanType) {</span>
+<span class="lineNum">     284 </span><span class="lineCov">         12 :                 return Expression();</span>
+<span class="lineNum">     285 </span>            :         }
+<span class="lineNum">     286 </span><span class="lineCov">        105 :         if (args[0].value.bool_value) {</span>
+<span class="lineNum">     287 </span><span class="lineCov">         75 :                 if (args[1].type == NumberType) {</span>
+<span class="lineNum">     288 </span><span class="lineCov">         63 :                         ifoperation.head.type = NumberType;</span>
+<span class="lineNum">     289 </span><span class="lineCov">         63 :                         ifoperation.head.value.num_value = args[1].value.num_value;</span>
+<span class="lineNum">     290 </span>            :                 }
+<span class="lineNum">     291 </span><span class="lineCov">         12 :                 else if(args[1].type == BooleanType){</span>
+<span class="lineNum">     292 </span><span class="lineCov">         12 :                         ifoperation.head.type = BooleanType;</span>
+<span class="lineNum">     293 </span><span class="lineCov">         12 :                         ifoperation.head.value.bool_value = args[1].value.bool_value;</span>
+<span class="lineNum">     294 </span>            :                 }
+<span class="lineNum">     295 </span>            :         }
+<span class="lineNum">     296 </span><span class="lineCov">         30 :         else if(!args[0].value.bool_value) {</span>
+<span class="lineNum">     297 </span><span class="lineCov">         30 :                 if (args[2].type == NumberType) {</span>
+<span class="lineNum">     298 </span><span class="lineCov">         18 :                         ifoperation.head.type = NumberType;</span>
+<span class="lineNum">     299 </span><span class="lineCov">         18 :                         ifoperation.head.value.num_value = args[2].value.num_value;</span>
+<span class="lineNum">     300 </span>            :                 }
+<span class="lineNum">     301 </span><span class="lineCov">         12 :                 else if (args[2].type == BooleanType) {</span>
+<span class="lineNum">     302 </span><span class="lineCov">         12 :                         ifoperation.head.type = BooleanType;</span>
+<span class="lineNum">     303 </span><span class="lineCov">         12 :                         ifoperation.head.value.bool_value = args[2].value.bool_value;</span>
+<span class="lineNum">     304 </span>            :                 }
+<span class="lineNum">     305 </span>            :         }
+<span class="lineNum">     306 </span><span class="lineCov">        105 :         return ifoperation;</span>
+<a name="307"><span class="lineNum">     307 </span>            : }</a>
+<span class="lineNum">     308 </span>            : 
+<span class="lineNum">     309 </span><span class="lineCov">        108 : Expression Begin(const std::vector&lt;Atom&gt;&amp; args) {</span>
+<span class="lineNum">     310 </span><span class="lineCov">        108 :         if (args.empty()) {</span>
+<span class="lineNum">     311 </span><span class="lineNoCov">          0 :                 return Expression();</span>
+<span class="lineNum">     312 </span>            :         }
+<span class="lineNum">     313 </span><span class="lineCov">        216 :         Expression begoperation;</span>
+<span class="lineNum">     314 </span><span class="lineCov">        108 :         if (args[args.size() - 1].type == NumberType) {</span>
+<span class="lineNum">     315 </span><span class="lineCov">         99 :                 begoperation.head.type = NumberType;</span>
+<span class="lineNum">     316 </span><span class="lineCov">         99 :                 begoperation.head.value.num_value = args[args.size() - 1].value.num_value;</span>
+<span class="lineNum">     317 </span>            :         }
+<span class="lineNum">     318 </span>            :         else {
+<span class="lineNum">     319 </span><span class="lineCov">          9 :                 begoperation.head.type = BooleanType;</span>
+<span class="lineNum">     320 </span><span class="lineCov">          9 :                 begoperation.head.value.bool_value = args[args.size() - 1].value.bool_value;</span>
+<span class="lineNum">     321 </span>            :         }
+<span class="lineNum">     322 </span><span class="lineCov">        108 :         return  begoperation;</span>
+<a name="323"><span class="lineNum">     323 </span>            : }</a>
+<span class="lineNum">     324 </span>            : 
+<span class="lineNum">     325 </span><span class="lineCov">        230 : Expression Define(const std::vector&lt;Atom&gt;&amp; args) {</span>
+<span class="lineNum">     326 </span><span class="lineCov">        230 :         if (args.size() != 2) {</span>
+<span class="lineNum">     327 </span><span class="lineCov">          6 :                 return Expression();</span>
+<span class="lineNum">     328 </span>            :         }
+<span class="lineNum">     329 </span><span class="lineCov">        224 :         if (isprocedure1(args[0].value.sym_value)) {</span>
+<span class="lineNum">     330 </span><span class="lineCov">          9 :                 return Expression();</span>
+<span class="lineNum">     331 </span>            :         }
+<span class="lineNum">     332 </span><span class="lineCov">        430 :         Expression defineoperation;</span>
+<span class="lineNum">     333 </span><span class="lineCov">        215 :         if (args[1].type == NumberType) {</span>
+<span class="lineNum">     334 </span><span class="lineCov">        197 :                 defineoperation.head.type = NumberType;</span>
+<span class="lineNum">     335 </span><span class="lineCov">        197 :                 defineoperation.head.value.num_value = args[1].value.num_value;</span>
+<span class="lineNum">     336 </span>            :         }
+<span class="lineNum">     337 </span>            :         else {
+<span class="lineNum">     338 </span><span class="lineCov">         18 :                 defineoperation.head.type = BooleanType;</span>
+<span class="lineNum">     339 </span><span class="lineCov">         18 :                 defineoperation.head.value.bool_value = args[1].value.bool_value;</span>
+<span class="lineNum">     340 </span>            :         }
+<span class="lineNum">     341 </span><span class="lineCov">        215 :         return  defineoperation;</span>
+<a name="342"><span class="lineNum">     342 </span>            : }</a>
+<span class="lineNum">     343 </span>            : 
+<span class="lineNum">     344 </span><span class="lineCov">        181 : Expression POINT1(const std::vector&lt;Atom&gt;&amp; args) {</span>
+<span class="lineNum">     345 </span><span class="lineCov">        181 :         if (args.size() != 2) {</span>
+<span class="lineNum">     346 </span><span class="lineCov">         27 :                 return Expression();</span>
+<span class="lineNum">     347 </span>            :         }
+<span class="lineNum">     348 </span><span class="lineCov">        308 :         Expression pointoutput;</span>
+<span class="lineNum">     349 </span><span class="lineCov">        154 :         if (args[0].type != NumberType) {</span>
+<span class="lineNum">     350 </span><span class="lineCov">          8 :                 return Expression();</span>
+<span class="lineNum">     351 </span>            :         }
+<span class="lineNum">     352 </span><span class="lineCov">        146 :         if (args[1].type != NumberType) {</span>
+<span class="lineNum">     353 </span><span class="lineCov">          8 :                 return Expression();</span>
+<span class="lineNum">     354 </span>            :         }
+<span class="lineNum">     355 </span><span class="lineCov">        138 :         pointoutput.head.type = PointType;</span>
+<span class="lineNum">     356 </span><span class="lineCov">        138 :         pointoutput.head.value.point_value.x = args[0].value.num_value;</span>
+<span class="lineNum">     357 </span><span class="lineCov">        138 :         pointoutput.head.value.point_value.y = args[1].value.num_value;</span>
+<span class="lineNum">     358 </span><span class="lineCov">        138 :         return pointoutput;</span>
+<a name="359"><span class="lineNum">     359 </span>            : }</a>
+<span class="lineNum">     360 </span>            : 
+<span class="lineNum">     361 </span><span class="lineCov">         27 : Expression SIN(const std::vector&lt;Atom&gt;&amp; args) {</span>
+<span class="lineNum">     362 </span><span class="lineCov">         27 :         if (args.size() != 1) {</span>
+<span class="lineNum">     363 </span><span class="lineCov">          9 :                 return Expression();</span>
+<span class="lineNum">     364 </span>            :         }
+<span class="lineNum">     365 </span><span class="lineCov">         18 :         if (args[0].type != NumberType) {</span>
+<span class="lineNum">     366 </span><span class="lineCov">          9 :                 return Expression();</span>
+<span class="lineNum">     367 </span>            :         }
+<span class="lineNum">     368 </span><span class="lineCov">         18 :         Expression sinoperation;</span>
+<span class="lineNum">     369 </span><span class="lineCov">          9 :         sinoperation.head.type = NumberType;</span>
+<span class="lineNum">     370 </span><span class="lineCov">          9 :         int x = int(sin(args[0].value.num_value) * 1000);</span>
+<span class="lineNum">     371 </span><span class="lineCov">          9 :         x = x / 1000;</span>
+<span class="lineNum">     372 </span><span class="lineCov">          9 :         double y = x;</span>
+<span class="lineNum">     373 </span><span class="lineCov">          9 :         sinoperation.head.value.num_value = y;</span>
+<span class="lineNum">     374 </span><span class="lineCov">          9 :         return sinoperation;</span>
+<a name="375"><span class="lineNum">     375 </span>            : }</a>
+<span class="lineNum">     376 </span>            : 
+<span class="lineNum">     377 </span><span class="lineCov">         27 : Expression COS(const std::vector&lt;Atom&gt;&amp; args) {</span>
+<span class="lineNum">     378 </span><span class="lineCov">         27 :         if (args.size() != 1) {</span>
+<span class="lineNum">     379 </span><span class="lineCov">          9 :                 return Expression();</span>
+<span class="lineNum">     380 </span>            :         }
+<span class="lineNum">     381 </span><span class="lineCov">         18 :         if (args[0].type != NumberType) {</span>
+<span class="lineNum">     382 </span><span class="lineCov">          9 :                 return Expression();</span>
+<span class="lineNum">     383 </span>            :         }
+<span class="lineNum">     384 </span><span class="lineCov">         18 :         Expression cosoperation;</span>
+<span class="lineNum">     385 </span><span class="lineCov">          9 :         cosoperation.head.type = NumberType;</span>
+<span class="lineNum">     386 </span><span class="lineCov">          9 :         int x = int(cos(args[0].value.num_value) * 1000);</span>
+<span class="lineNum">     387 </span><span class="lineCov">          9 :         x = x / 1000;</span>
+<span class="lineNum">     388 </span><span class="lineCov">          9 :         double y = x;</span>
+<span class="lineNum">     389 </span><span class="lineCov">          9 :         cosoperation.head.value.num_value = y;</span>
+<span class="lineNum">     390 </span><span class="lineCov">          9 :         return cosoperation;</span>
+<a name="391"><span class="lineNum">     391 </span>            : }</a>
+<span class="lineNum">     392 </span>            : 
+<span class="lineNum">     393 </span><span class="lineCov">         36 : Expression ARCTAN(const std::vector&lt;Atom&gt;&amp; args) {</span>
+<span class="lineNum">     394 </span><span class="lineCov">         36 :         if (args.size() != 2) {</span>
+<span class="lineNum">     395 </span><span class="lineCov">          9 :                 return Expression();</span>
+<span class="lineNum">     396 </span>            :         }
+<span class="lineNum">     397 </span><span class="lineCov">         27 :         if (args[0].type != NumberType) {</span>
+<span class="lineNum">     398 </span><span class="lineCov">          9 :                 return Expression();</span>
+<span class="lineNum">     399 </span>            :         }
+<span class="lineNum">     400 </span><span class="lineCov">         18 :         if (args[1].type != NumberType) {</span>
+<span class="lineNum">     401 </span><span class="lineCov">          9 :                 return Expression();</span>
+<span class="lineNum">     402 </span>            :         }
+<span class="lineNum">     403 </span><span class="lineCov">         18 :         Expression arctanoperation;</span>
+<span class="lineNum">     404 </span><span class="lineCov">          9 :         arctanoperation.head.type = NumberType;</span>
+<span class="lineNum">     405 </span><span class="lineCov">          9 :         arctanoperation.head.value.num_value = atan2(args[0].value.num_value, args[1].value.num_value);</span>
+<span class="lineNum">     406 </span><span class="lineCov">          9 :         return arctanoperation;</span>
+<a name="407"><span class="lineNum">     407 </span>            : }</a>
+<span class="lineNum">     408 </span>            : 
+<span class="lineNum">     409 </span><span class="lineCov">         42 : Expression LINE(const std::vector&lt;Atom&gt;&amp; args) {</span>
+<span class="lineNum">     410 </span><span class="lineCov">         42 :         if (args.size() != 2) {</span>
+<span class="lineNum">     411 </span><span class="lineCov">          9 :                 return Expression();</span>
+<span class="lineNum">     412 </span>            :         }
+<span class="lineNum">     413 </span><span class="lineCov">         33 :         if (args[0].type != PointType) {</span>
+<span class="lineNum">     414 </span><span class="lineCov">          9 :                 return Expression();</span>
+<span class="lineNum">     415 </span>            :         }
+<span class="lineNum">     416 </span><span class="lineCov">         24 :         if (args[1].type != PointType) {</span>
+<span class="lineNum">     417 </span><span class="lineCov">          9 :                 return Expression();</span>
+<span class="lineNum">     418 </span>            :         }
+<span class="lineNum">     419 </span><span class="lineCov">         30 :         Expression Lineoperation;</span>
+<span class="lineNum">     420 </span><span class="lineCov">         15 :         Lineoperation.head.type = LineType;</span>
+<span class="lineNum">     421 </span><span class="lineCov">         15 :         Lineoperation.head.value.line_value.first.x = args[0].value.point_value.x;</span>
+<span class="lineNum">     422 </span><span class="lineCov">         15 :         Lineoperation.head.value.line_value.first.y = args[0].value.point_value.y;</span>
+<span class="lineNum">     423 </span><span class="lineCov">         15 :         Lineoperation.head.value.line_value.second.x = args[1].value.point_value.x;</span>
+<span class="lineNum">     424 </span><span class="lineCov">         15 :         Lineoperation.head.value.line_value.second.y = args[1].value.point_value.y;</span>
+<span class="lineNum">     425 </span><span class="lineCov">         15 :         return Lineoperation;</span>
+<a name="426"><span class="lineNum">     426 </span>            : }</a>
+<span class="lineNum">     427 </span>            : 
+<span class="lineNum">     428 </span><span class="lineCov">         20 : Expression DRAW(const std::vector&lt;Atom&gt;&amp; args) {</span>
+<span class="lineNum">     429 </span><span class="lineCov">         36 :         for (unsigned int i = 0; i &lt; args.size(); i++) {</span>
+<span class="lineNum">     430 </span><span class="lineCov">         20 :                 if (args[i].type != PointType) {</span>
+<span class="lineNum">     431 </span><span class="lineCov">         12 :                         if (args[i].type != LineType) {</span>
+<span class="lineNum">     432 </span><span class="lineCov">          8 :                                 if (args[i].type != ArcType) {</span>
+<span class="lineNum">     433 </span><span class="lineCov">          4 :                                         throw InterpreterSemanticError(&quot;Error: input is invalid&quot;);</span>
+<span class="lineNum">     434 </span>            :                                 }
+<span class="lineNum">     435 </span>            :                         }
+<span class="lineNum">     436 </span>            :                 }
+<span class="lineNum">     437 </span>            :         }
+<span class="lineNum">     438 </span><span class="lineCov">         16 :         return Expression();</span>
+<a name="439"><span class="lineNum">     439 </span>            : }</a>
+<span class="lineNum">     440 </span>            : 
+<span class="lineNum">     441 </span><span class="lineCov">         31 : Expression ARC(const std::vector&lt;Atom&gt;&amp; args) {</span>
+<span class="lineNum">     442 </span><span class="lineCov">         31 :         if (args.size() != 3) {</span>
+<span class="lineNum">     443 </span><span class="lineCov">          4 :                 return Expression();</span>
+<span class="lineNum">     444 </span>            :         }
+<span class="lineNum">     445 </span><span class="lineCov">         27 :         if (args[0].type != PointType) {</span>
+<span class="lineNum">     446 </span><span class="lineCov">          4 :                 return Expression();</span>
+<span class="lineNum">     447 </span>            :         }
+<span class="lineNum">     448 </span><span class="lineCov">         23 :         if (args[1].type != PointType) {</span>
+<span class="lineNum">     449 </span><span class="lineCov">          4 :                 return Expression();</span>
+<span class="lineNum">     450 </span>            :         }
+<span class="lineNum">     451 </span><span class="lineCov">         19 :         if (args[2].type != NumberType) {</span>
+<span class="lineNum">     452 </span><span class="lineCov">          4 :                 return Expression();</span>
+<span class="lineNum">     453 </span>            :         }
+<span class="lineNum">     454 </span><span class="lineCov">         30 :         Expression Arcoperation;</span>
+<span class="lineNum">     455 </span><span class="lineCov">         15 :         Arcoperation.head.type = ArcType;</span>
+<span class="lineNum">     456 </span><span class="lineCov">         15 :         Arcoperation.head.value.arc_value.center.x = args[0].value.point_value.x;</span>
+<span class="lineNum">     457 </span><span class="lineCov">         15 :         Arcoperation.head.value.arc_value.center.y = args[0].value.point_value.y;</span>
+<span class="lineNum">     458 </span><span class="lineCov">         15 :         Arcoperation.head.value.arc_value.start.x= args[1].value.point_value.x;</span>
+<span class="lineNum">     459 </span><span class="lineCov">         15 :         Arcoperation.head.value.arc_value.start.y = args[1].value.point_value.y;</span>
+<span class="lineNum">     460 </span><span class="lineCov">         15 :         Arcoperation.head.value.arc_value.span = args[2].value.num_value;</span>
+<span class="lineNum">     461 </span><span class="lineCov">         15 :         return Arcoperation;</span>
+<a name="462"><span class="lineNum">     462 </span>            : }</a>
+<span class="lineNum">     463 </span>            : 
+<span class="lineNum">     464 </span><span class="lineCov">        224 : bool isprocedure1(Symbol symbol) {</span>
+<span class="lineNum">     465 </span><span class="lineCov">        224 :         bool a = false;</span>
+<span class="lineNum">     466 </span><span class="lineCov">        224 :         if (symbol==&quot;draw&quot;||symbol==&quot;point&quot;||symbol==&quot;line&quot;||symbol==&quot;arc&quot;||symbol==&quot;sin&quot;||symbol==&quot;cos&quot;||symbol==&quot;arctan&quot;||symbol == &quot;not&quot; || symbol == &quot;and&quot; || symbol == &quot;or&quot; || symbol == &quot;&lt;&quot; || symbol == &quot;&lt;=&quot; || symbol == &quot;&gt;&quot; || symbol == &quot;&gt;=&quot; || symbol == &quot;=&quot; || symbol == &quot;+&quot; || symbol == &quot;-&quot; || symbol == &quot;*&quot; || symbol == &quot;/&quot; || symbol == &quot;log10&quot; || symbol == &quot;pi&quot; || symbol == &quot;pow&quot; || symbol == &quot;begin&quot; || symbol == &quot;define&quot; || symbol == &quot;if&quot;) {</span>
+<span class="lineNum">     467 </span><span class="lineCov">          9 :                 a=true;</span>
+<span class="lineNum">     468 </span>            :         }
+<span class="lineNum">     469 </span><span class="lineCov">        224 :         return a;</span>
+<a name="470"><span class="lineNum">     470 </span>            : }</a>
+<span class="lineNum">     471 </span>            : 
+<span class="lineNum">     472 </span><span class="lineCov">       1862 : bool Environment::isprocedure(Symbol symbol) {</span>
+<span class="lineNum">     473 </span><span class="lineCov">       1862 :         bool a = false;</span>
+<span class="lineNum">     474 </span><span class="lineCov">       1862 :         if (symbol == &quot;draw&quot; || symbol == &quot;point&quot; || symbol == &quot;line&quot; || symbol == &quot;arc&quot; || symbol == &quot;sin&quot; || symbol == &quot;cos&quot; || symbol == &quot;arctan&quot; || symbol == &quot;not&quot; || symbol == &quot;and&quot; || symbol == &quot;or&quot; || symbol == &quot;&lt;&quot; || symbol == &quot;&lt;=&quot; || symbol == &quot;&gt;&quot; || symbol == &quot;&gt;=&quot; || symbol == &quot;=&quot; || symbol == &quot;+&quot; || symbol == &quot;-&quot; || symbol == &quot;*&quot; || symbol == &quot;/&quot; || symbol == &quot;log10&quot; || symbol == &quot;pi&quot; || symbol == &quot;pow&quot; || symbol == &quot;begin&quot; || symbol == &quot;define&quot; || symbol == &quot;if&quot;) {</span>
+<span class="lineNum">     475 </span><span class="lineCov">       1853 :                 a=true;</span>
+<span class="lineNum">     476 </span>            :         }
+<a name="477"><span class="lineNum">     477 </span><span class="lineCov">       1862 :         return a;</span></a>
+<span class="lineNum">     478 </span>            : }
+<span class="lineNum">     479 </span><span class="lineCov">       2153 : Procedure Environment::mapping(Symbol symbol) {</span>
+<span class="lineNum">     480 </span><span class="lineCov">       2153 :         return envmap[symbol].proc;</span>
+<a name="481"><span class="lineNum">     481 </span>            : }</a>
+<span class="lineNum">     482 </span>            : 
+<span class="lineNum">     483 </span><span class="lineCov">         62 : Expression Environment::getexpression(Symbol symbol) {</span>
+<span class="lineNum">     484 </span><span class="lineCov">         62 :         Expression pioperation;</span>
+<span class="lineNum">     485 </span><span class="lineCov">         62 :         if (symbol == &quot;pi&quot;) {</span>
+<span class="lineNum">     486 </span><span class="lineCov">         62 :                 pioperation.head.type = NumberType;</span>
+<span class="lineNum">     487 </span><span class="lineCov">         62 :                 pioperation.head.value.num_value = atan2(0, -1);</span>
+<span class="lineNum">     488 </span>            :         }
+<span class="lineNum">     489 </span><span class="lineCov">         62 :         return pioperation;</span>
+<a name="490"><span class="lineNum">     490 </span>            : }</a>
+<span class="lineNum">     491 </span>            : 
+<span class="lineNum">     492 </span><span class="lineCov">       1819 : Environment::Environment() {</span>
+<span class="lineNum">     493 </span><span class="lineCov">       1819 :         envmap[&quot;not&quot;];</span>
+<span class="lineNum">     494 </span><span class="lineCov">       1819 :         envmap[&quot;not&quot;].proc =  enot;</span>
+<span class="lineNum">     495 </span><span class="lineCov">       1819 :         envmap[&quot;and&quot;];</span>
+<span class="lineNum">     496 </span><span class="lineCov">       1819 :         envmap[&quot;and&quot;].proc =  eand;</span>
+<span class="lineNum">     497 </span><span class="lineCov">       1819 :         envmap[&quot;or&quot;];</span>
+<span class="lineNum">     498 </span><span class="lineCov">       1819 :         envmap[&quot;or&quot;].proc = eor;</span>
+<span class="lineNum">     499 </span><span class="lineCov">       1819 :         envmap[&quot;&lt;&quot;];</span>
+<span class="lineNum">     500 </span><span class="lineCov">       1819 :         envmap[&quot;&lt;&quot;].proc = smaller;</span>
+<span class="lineNum">     501 </span><span class="lineCov">       1819 :         envmap[&quot;&lt;=&quot;];</span>
+<span class="lineNum">     502 </span><span class="lineCov">       1819 :         envmap[&quot;&lt;=&quot;].proc = smallerandequal;</span>
+<span class="lineNum">     503 </span><span class="lineCov">       1819 :         envmap[&quot;&gt;&quot;];</span>
+<span class="lineNum">     504 </span><span class="lineCov">       1819 :         envmap[&quot;&gt;&quot;].proc = grater;</span>
+<span class="lineNum">     505 </span><span class="lineCov">       1819 :         envmap[&quot;&gt;=&quot;];</span>
+<span class="lineNum">     506 </span><span class="lineCov">       1819 :         envmap[&quot;&gt;=&quot;].proc = graterandequal;</span>
+<span class="lineNum">     507 </span><span class="lineCov">       1819 :         envmap[&quot;=&quot;];</span>
+<span class="lineNum">     508 </span><span class="lineCov">       1819 :         envmap[&quot;=&quot;].proc = equal;</span>
+<span class="lineNum">     509 </span><span class="lineCov">       1819 :         envmap[&quot;+&quot;];</span>
+<span class="lineNum">     510 </span><span class="lineCov">       1819 :         envmap[&quot;+&quot;].proc = plus;</span>
+<span class="lineNum">     511 </span><span class="lineCov">       1819 :         envmap[&quot;-&quot;];</span>
+<span class="lineNum">     512 </span><span class="lineCov">       1819 :         envmap[&quot;-&quot;].proc = minusandnegative;</span>
+<span class="lineNum">     513 </span><span class="lineCov">       1819 :         envmap[&quot;*&quot;];</span>
+<span class="lineNum">     514 </span><span class="lineCov">       1819 :         envmap[&quot;*&quot;].proc = multi;</span>
+<span class="lineNum">     515 </span><span class="lineCov">       1819 :         envmap[&quot;/&quot;];</span>
+<span class="lineNum">     516 </span><span class="lineCov">       1819 :         envmap[&quot;/&quot;].proc = divide;</span>
+<span class="lineNum">     517 </span><span class="lineCov">       1819 :         envmap[&quot;log10&quot;];</span>
+<span class="lineNum">     518 </span><span class="lineCov">       1819 :         envmap[&quot;log10&quot;].proc = log10method;</span>
+<span class="lineNum">     519 </span><span class="lineCov">       1819 :         envmap[&quot;pow&quot;];</span>
+<span class="lineNum">     520 </span><span class="lineCov">       1819 :         envmap[&quot;pow&quot;].proc = power;</span>
+<span class="lineNum">     521 </span><span class="lineCov">       1819 :         envmap[&quot;if&quot;];</span>
+<span class="lineNum">     522 </span><span class="lineCov">       1819 :         envmap[&quot;if&quot;].proc = IF;</span>
+<span class="lineNum">     523 </span><span class="lineCov">       1819 :         envmap[&quot;begin&quot;];</span>
+<span class="lineNum">     524 </span><span class="lineCov">       1819 :         envmap[&quot;begin&quot;].proc = Begin;</span>
+<span class="lineNum">     525 </span><span class="lineCov">       1819 :         envmap[&quot;define&quot;];</span>
+<span class="lineNum">     526 </span><span class="lineCov">       1819 :         envmap[&quot;define&quot;].proc = Define;</span>
+<span class="lineNum">     527 </span><span class="lineCov">       1819 :         envmap[&quot;point&quot;];</span>
+<span class="lineNum">     528 </span><span class="lineCov">       1819 :         envmap[&quot;point&quot;].proc = POINT1;</span>
+<span class="lineNum">     529 </span><span class="lineCov">       1819 :         envmap[&quot;line&quot;];</span>
+<span class="lineNum">     530 </span><span class="lineCov">       1819 :         envmap[&quot;line&quot;].proc = LINE;</span>
+<span class="lineNum">     531 </span><span class="lineCov">       1819 :         envmap[&quot;arc&quot;];</span>
+<span class="lineNum">     532 </span><span class="lineCov">       1819 :         envmap[&quot;arc&quot;].proc = ARC;</span>
+<span class="lineNum">     533 </span><span class="lineCov">       1819 :         envmap[&quot;sin&quot;];</span>
+<span class="lineNum">     534 </span><span class="lineCov">       1819 :         envmap[&quot;sin&quot;].proc = SIN;</span>
+<span class="lineNum">     535 </span><span class="lineCov">       1819 :         envmap[&quot;cos&quot;];</span>
+<span class="lineNum">     536 </span><span class="lineCov">       1819 :         envmap[&quot;cos&quot;].proc = COS;</span>
+<span class="lineNum">     537 </span><span class="lineCov">       1819 :         envmap[&quot;arctan&quot;];</span>
+<span class="lineNum">     538 </span><span class="lineCov">       1819 :         envmap[&quot;arctan&quot;].proc = ARCTAN;</span>
+<span class="lineNum">     539 </span><span class="lineCov">       1819 :         envmap[&quot;draw&quot;];</span>
+<span class="lineNum">     540 </span><span class="lineCov">       1819 :         envmap[&quot;draw&quot;].proc = DRAW;</span>
+<span class="lineNum">     541 </span><span class="lineCov">       1819 : }</span>
+<span class="lineNum">     542 </span>            : 
+<span class="lineNum">     543 </span>            : 
+<span class="lineNum">     544 </span>            : 
+</pre>
+      </td>
+    </tr>
+  </table>
+  <br>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="ruler"><img src="../glass.png" width=3 height=3 alt=""></td></tr>
+    <tr><td class="versionInfo">Generated by: <a href="http://ltp.sourceforge.net/coverage/lcov.php" target="_parent">LCOV version 1.13</a></td></tr>
+  </table>
+  <br>
+
+</body>
+</html>
